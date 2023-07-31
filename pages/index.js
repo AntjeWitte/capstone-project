@@ -1,10 +1,37 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { Inter } from "next/font/google";
+import PralineForm from "../components/PralineForm";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  // async function handleSubmit(event) {
+  //   event.preventDefault();
+
+  //   const formData = new FormData(event.target);
+  //   const pralineData = Object.fromEntries(formData);
+
+  //   const response = await fetch("/api/pralines", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(pralineData),
+  //   });
+
+  //   if (!response.ok) {
+  //     console.error(response.status);
+  //     return;
+  //   }
+
+  //   function handleSubmit(event) {
+  //     event.preventDefault();
+  //     const formData = new FormData(event.target);
+  //     const data = Object.fromEntries(formData);
+  //     handleAddIngredient(data);
+  //   }
+
   return (
     <>
       <Head>
@@ -14,7 +41,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={inter.className}>
-        <Heading>🐧Penguin Capstone Template🐧</Heading>
+        <Heading>Pralinenschachtel Konfigurator 🍱</Heading>
+        <PralineForm />
+        {/* onSubmit={handleSubmit} value=""  */}
       </main>
     </>
   );
