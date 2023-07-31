@@ -2,6 +2,7 @@
 //import { StyledButton } from "../Button/Button.styled";
 import { useState } from "react";
 import { uid } from "uid";
+import useSWR from "swr";
 
 export default function ProductForm() {
   const [zutatenfeld, setZutatenfeld] = useState("");
@@ -41,6 +42,17 @@ export default function ProductForm() {
     setAllergene(
       allergene.filter((allergen) => (allergen.id === id ? false : true))
     );
+  }
+
+  const { data, isLoading } = useSWR("/api/pralinen");
+  console.log("data", data);
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (!data) {
+    return;
   }
 
   return (
@@ -142,11 +154,19 @@ export default function ProductForm() {
       </ul>
       <br></br>
       <label htmlFor="bild">
-        Bild hochladen: <input type="text" id="bild" name="bild" />
+        Bild hochladen: <input type="file" id="bild" name="bild" />
       </label>
       <br></br>
       <button type="submit">Abbrechen</button>
       <button type="submit">Speichern / hinzufügen</button>
+
+      <ul>
+        {data.map((praline) => (
+          <li key={praline._id}>
+            <p>{praline.name}</p>
+          </li>
+        ))}
+      </ul>
     </form>
   );
 }
