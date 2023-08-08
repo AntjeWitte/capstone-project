@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const pralinenSchema = new Schema({
   name: { type: String, required: true },
-  weight: { type: Number, required: true },
+  weight: { type: String, required: true },
   version: { type: String, required: true },
   ingredients: { type: Array, required: true },
   allergyTraces: { type: Array, required: false },

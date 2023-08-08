@@ -1,8 +1,9 @@
-//import { StyledForm, StyledLabel } from "./PralineForm.styled";
-//import { StyledButton } from "../Button/Button.styled";
-import { useState } from "react";
+// import { StyledForm, StyledLabel } from "./PralineForm.styled";
+// import { StyledButton } from "../Button/Button.styled";
+import React, { useState } from "react";
 import { uid } from "uid";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
 export default function ProductForm() {
   const [zutatenfeld, setZutatenfeld] = useState("");
@@ -11,6 +12,14 @@ export default function ProductForm() {
   const [allergenfeld, setAllergenfeld] = useState("");
   const [allergenMenge, setAllergenMenge] = useState("");
   const [allergene, setAllergene] = useState([]);
+  const [currentPraline, setCurrentPraline] = useState(null);
+  const [nameField, setNameField] = useState("");
+  const [versionField, setVersionField] = useState("");
+  const [weightField, setWeightField] = useState("");
+
+  const router = useRouter();
+
+  console.log("currentPraline", currentPraline);
 
   function handleAddIngredient(event) {
     console.log(zutaten);
@@ -24,7 +33,7 @@ export default function ProductForm() {
   }
 
   function handleDeleteIngredient(id) {
-    setZutaten(zutaten.filter((zutat) => (zutat.id === id ? false : true)));
+    setZutaten(zutaten.filter((zutat) => zutat.id !== id));
   }
 
   function handleAddAllergen(event) {
@@ -42,20 +51,31 @@ export default function ProductForm() {
   }
 
   function handleDeleteAllergen(id) {
-    setAllergene(
-      allergene.filter((allergen) => (allergen.id === id ? false : true))
-    );
+    setAllergene(allergene.filter((allergen) => allergen.id !== id));
+  }
+
+  function cancel() {
+    setZutatenfeld("");
+    setMengenfeld("");
+    setZutaten([]);
+    setAllergenfeld("");
+    setAllergenMenge("");
+    setAllergene([]);
+    setCurrentPraline(null);
+    setNameField("");
+    setVersionField("");
+    setWeightField("");
   }
 
   const { data, isLoading, mutate } = useSWR("/api/pralinen");
-  //console.log("data", data);
+  // console.log("data", data);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
   if (!data) {
-    return;
+    return null;
   }
 
   async function handleSubmit(event) {
@@ -73,12 +93,14 @@ export default function ProductForm() {
       name: pralineData.name,
       version: pralineData.version,
       weight: pralineData.weight,
-      ingredients: zutaten.map((zutat) => {
-        return { ingredient: zutat.ingredient, amount: zutat.amount };
-      }),
-      allergyTraces: allergene.map((allergen) => {
-        return { ingredient: allergen.ingredient, amount: allergen.amount };
-      }),
+      ingredients: zutaten.map((zutat) => ({
+        ingredient: zutat.ingredient,
+        amount: zutat.amount,
+      })),
+      allergyTraces: allergene.map((allergen) => ({
+        ingredient: allergen.ingredient,
+        amount: allergen.amount,
+      })),
     };
 
     console.log("newPraline", newPraline);
@@ -97,30 +119,78 @@ export default function ProductForm() {
       mutate();
     }
 
+    setZutaten([]);
+    setAllergene([]);
+    setNameField("");
+    setVersionField("");
+    setWeightField("");
     event.target.reset();
     event.target.elements[0].focus();
   }
 
+  async function handleDelete() {
+    await fetch(`/api/pralinen/${currentPraline._id}`, {
+      method: "DELETE",
+    });
+    setZutaten([]);
+    setAllergene([]);
+    setNameField("");
+    setVersionField("");
+    setWeightField("");
+    setCurrentPraline(null);
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Pralinen bearbeiten</h2>
-      <br></br>
-      <button>Praline bearbeiten</button>
-      <button>Praline löschen</button>
-      <br></br>
+      <h2>{currentPraline ? "Pralinen bearbeiten" : "Pralinen erstellen"}</h2>
+      <br />
+      <button type="button">Praline bearbeiten</button>
+      <button type="button" disabled={!currentPraline} onClick={handleDelete}>
+        Praline löschen
+      </button>
+      <br />
       <label htmlFor="name">
-        Name: <input type="text" id="name" name="name" required />
+        Name:{" "}
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={nameField}
+          onChange={(event) => {
+            setNameField(event.target.value);
+          }}
+          required
+        />
       </label>
-      <br></br>
+      <br />
       <label htmlFor="version">
-        Version: <input type="text" id="version" name="version" required />
+        Version:{" "}
+        <input
+          type="text"
+          id="version"
+          name="version"
+          value={versionField}
+          onChange={(event) => {
+            setVersionField(event.target.value);
+          }}
+        />
       </label>
-      <br></br>
+      <br />
       <label htmlFor="weight">
         Gewicht:{" "}
-        <input type="number" id="weight" name="weight" min="0" required /> g
+        <input
+          type="text"
+          id="weight"
+          name="weight"
+          min="0"
+          value={weightField}
+          onChange={(event) => {
+            setWeightField(event.target.value);
+          }}
+        />{" "}
+        g
       </label>
-      <br></br>
+      <br />
       <label htmlFor="ingredient">
         Zutaten:{" "}
         <input
@@ -142,7 +212,7 @@ export default function ProductForm() {
           }}
         />{" "}
         g{" "}
-        <button type="submit" onClick={handleAddIngredient}>
+        <button type="button" onClick={handleAddIngredient}>
           +
         </button>
       </label>
@@ -151,7 +221,7 @@ export default function ProductForm() {
           <li key={zutat.id}>
             {zutat.ingredient} {zutat.amount} g{" "}
             <button
-              type="submit"
+              type="button"
               onClick={() => handleDeleteIngredient(zutat.id)}
             >
               -
@@ -159,7 +229,7 @@ export default function ProductForm() {
           </li>
         ))}
       </ul>
-      <br></br>
+      <br />
       <label htmlFor="spuren">
         Allergenspuren:{" "}
         <input
@@ -182,7 +252,7 @@ export default function ProductForm() {
           }}
         />{" "}
         g{" "}
-        <button type="submit" onClick={handleAddAllergen}>
+        <button type="button" onClick={handleAddAllergen}>
           +
         </button>
       </label>
@@ -191,7 +261,7 @@ export default function ProductForm() {
           <li key={allergen.id}>
             {allergen.ingredient} {allergen.amount} g{" "}
             <button
-              type="submit"
+              type="button"
               onClick={() => handleDeleteAllergen(allergen.id)}
             >
               -
@@ -199,18 +269,39 @@ export default function ProductForm() {
           </li>
         ))}
       </ul>
-      <br></br>
+      <br />
       <label htmlFor="bild">
         Bild hochladen: <input type="file" id="bild" name="bild" />
       </label>
-      <br></br>
-      <button type="submit">Abbrechen</button>
+      <br />
+      <button type="button" onClick={cancel}>
+        Zurücksetzen
+      </button>
       <button type="submit">Speichern / hinzufügen</button>
 
+      <br />
+      <hr />
+      <p>
+        Hilfsweise Darstellung der Pralinen aus der Datenbank (nur zu
+        Testzwecken):
+      </p>
       <ul>
         {data.map((praline) => (
-          <li key={praline._id}>
+          <li key={praline.id}>
             <p>{praline.name}</p>
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentPraline(praline);
+                setNameField(praline.name);
+                setVersionField(praline.version);
+                setWeightField(praline.weight);
+                setZutaten(praline.ingredients);
+                setAllergene(praline.allergyTraces);
+              }}
+            >
+              bearbeiten
+            </button>
           </li>
         ))}
       </ul>
