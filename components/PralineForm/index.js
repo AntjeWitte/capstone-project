@@ -1,9 +1,9 @@
-// import { StyledForm, StyledLabel } from "./PralineForm.styled";
-// import { StyledButton } from "../Button/Button.styled";
 import React, { useState } from "react";
 import { uid } from "uid";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import { CldUploadButton } from "next-cloudinary";
+import Image from "next/image";
 
 export default function ProductForm() {
   const [zutatenfeld, setZutatenfeld] = useState("");
@@ -16,10 +16,9 @@ export default function ProductForm() {
   const [nameField, setNameField] = useState("");
   const [versionField, setVersionField] = useState("");
   const [weightField, setWeightField] = useState("");
+  const [imageId, setImageId] = useState(null);
 
   const router = useRouter();
-
-  console.log("currentPraline", currentPraline);
 
   function handleAddIngredient(event) {
     console.log(zutaten);
@@ -93,6 +92,7 @@ export default function ProductForm() {
       name: pralineData.name,
       version: pralineData.version,
       weight: pralineData.weight,
+      imageId: imageId,
       ingredients: zutaten.map((zutat) => ({
         ingredient: zutat.ingredient,
         amount: zutat.amount,
@@ -270,15 +270,16 @@ export default function ProductForm() {
         ))}
       </ul>
       <br />
-      <label htmlFor="bild">
-        Bild hochladen: <input type="file" id="bild" name="bild" />
-      </label>
+      Bild hochladen:{" "}
+      <CldUploadButton
+        uploadPreset="lyzzky1u"
+        onUpload={({ info }) => setImageId(info.public_id)}
+      />
       <br />
       <button type="button" onClick={cancel}>
         Zurücksetzen
       </button>
       <button type="submit">Speichern / hinzufügen</button>
-
       <br />
       <hr />
       <p>
@@ -289,6 +290,16 @@ export default function ProductForm() {
         {data.map((praline) => (
           <li key={praline.id}>
             <p>{praline.name}</p>
+            {/* <CldImage */}
+            <Image
+              width="100"
+              height="100"
+              // src="https://res.cloudinary.com/dtz3vpjks/image/upload/v1691656636/Pralines/Test.png"
+              //"https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/Pralines/Marzipan.png"
+              src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${praline.imageId}.png`}
+              sizes="50vw"
+              alt={praline.name}
+            />
             <button
               type="button"
               onClick={() => {
