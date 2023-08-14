@@ -41,7 +41,6 @@ export default function ProductForm() {
   }
 
   const { data, isLoading, mutate } = useSWR("/api/pralinen");
-  // console.log("data", data);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -53,7 +52,6 @@ export default function ProductForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log("event", event);
 
     if (zutaten.length === 0) {
       return;
@@ -76,10 +74,6 @@ export default function ProductForm() {
         amount: allergen.amount,
       })),
     };
-
-    console.log("newPraline", newPraline);
-
-    console.log("pralineData", pralineData);
 
     const response = await fetch("/api/pralinen", {
       method: "POST",
@@ -106,6 +100,9 @@ export default function ProductForm() {
     await fetch(`/api/pralinen/${currentPraline._id}`, {
       method: "DELETE",
     });
+
+    mutate();
+
     setZutaten([]);
     setAllergene([]);
     setNameField("");
