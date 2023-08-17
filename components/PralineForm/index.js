@@ -70,14 +70,8 @@ export default function ProductForm() {
       version: pralineData.version,
       weight: pralineData.weight,
       imageId: imageId,
-      ingredients: ingredients.map((ingredient) => ({
-        ingredient: ingredient.ingredient,
-        amount: ingredient.amount,
-      })),
-      allergyTraces: allergyTraces.map((allergyTrace) => ({
-        ingredient: allergyTrace.ingredient,
-        amount: allergyTrace.amount,
-      })),
+      ingredients: ingredients,
+      allergyTraces: allergyTraces,
     };
 
     const response = await fetch("/api/pralinen", {
