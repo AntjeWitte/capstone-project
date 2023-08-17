@@ -14,7 +14,7 @@ export default function IngredientList({
   function handleAddIngredient(event) {
     event.preventDefault();
 
-    const ingredientWithAmount = { ingredient: value, amount: amount };
+    const ingredientWithAmount = { ingredient: value, amount };
     onAddIngredient(ingredientWithAmount);
     setValue("");
     setAmount("");
@@ -52,7 +52,10 @@ export default function IngredientList({
         {ingredients.map((ingredient) => (
           <li key={ingredient.id}>
             {ingredient.ingredient} {ingredient.amount} g{" "}
-            <button type="button" onClick={() => onDeleteIngredient(zutat.id)}>
+            <button
+              type="button"
+              onClick={() => onDeleteIngredient(ingredient.id)}
+            >
               -
             </button>
           </li>

@@ -18,4 +18,5 @@ export default async function handler(request, response) {
       response.status(400).json({ message: error.message });
     }
   }
+  return response.status(404);
 }
