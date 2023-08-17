@@ -7,8 +7,8 @@ import IngredientList from "./IngredientList";
 import InputField from "./InputField";
 
 export default function ProductForm() {
-  const [zutaten, setZutaten] = useState([]);
-  const [allergene, setAllergene] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [allergyTraces, setAllergyTraces] = useState([]);
   const [currentPraline, setCurrentPraline] = useState(null);
   const [nameField, setNameField] = useState("");
   const [versionField, setVersionField] = useState("");
@@ -16,24 +16,29 @@ export default function ProductForm() {
   const [imageId, setImageId] = useState(null);
 
   function handleAddIngredient(newIngredient) {
-    setZutaten([...zutaten, { ...newIngredient, id: uid() }]);
+    setIngredients([...ingredients, { ...newIngredient, id: uid() }]);
   }
 
   function handleDeleteIngredient(id) {
-    setZutaten(zutaten.filter((zutat) => zutat.id !== id));
+    setIngredients(ingredients.filter((zutat) => zutat.id !== id));
   }
 
-  function handleAddAllergen(allergeneMitMenge) {
-    setAllergene([...allergene, { ...allergeneMitMenge, id: uid() }]);
+  function handleAddAllergyTraces(allergyTraceWithAmount) {
+    setAllergyTraces([
+      ...allergyTraces,
+      { ...allergyTraceWithAmount, id: uid() },
+    ]);
   }
 
-  function handleDeleteAllergen(id) {
-    setAllergene(allergene.filter((allergen) => allergen.id !== id));
+  function handleDeleteAllergyTrace(id) {
+    setAllergyTraces(
+      allergyTraces.filter((allergyTrace) => allergyTrace.id !== id)
+    );
   }
 
   function cancel() {
-    setZutaten([]);
-    setAllergene([]);
+    setIngredients([]);
+    setAllergyTraces([]);
     setCurrentPraline(null);
     setNameField("");
     setVersionField("");
@@ -53,7 +58,7 @@ export default function ProductForm() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (zutaten.length === 0) {
+    if (ingredients.length === 0) {
       return;
     }
 
@@ -65,13 +70,13 @@ export default function ProductForm() {
       version: pralineData.version,
       weight: pralineData.weight,
       imageId: imageId,
-      ingredients: zutaten.map((zutat) => ({
-        ingredient: zutat.ingredient,
-        amount: zutat.amount,
+      ingredients: ingredients.map((ingredient) => ({
+        ingredient: ingredient.ingredient,
+        amount: ingredient.amount,
       })),
-      allergyTraces: allergene.map((allergen) => ({
-        ingredient: allergen.ingredient,
-        amount: allergen.amount,
+      allergyTraces: allergyTraces.map((allergyTrace) => ({
+        ingredient: allergyTrace.ingredient,
+        amount: allergyTrace.amount,
       })),
     };
 
@@ -87,8 +92,8 @@ export default function ProductForm() {
       mutate();
     }
 
-    setZutaten([]);
-    setAllergene([]);
+    setIngredients([]);
+    setAllergyTraces([]);
     setNameField("");
     setVersionField("");
     setWeightField("");
@@ -103,8 +108,8 @@ export default function ProductForm() {
 
     mutate();
 
-    setZutaten([]);
-    setAllergene([]);
+    setIngredients([]);
+    setAllergyTraces([]);
     setNameField("");
     setVersionField("");
     setWeightField("");
@@ -151,7 +156,7 @@ export default function ProductForm() {
         label="Zutaten"
         id="ingredient"
         onAddIngredient={handleAddIngredient}
-        zutaten={zutaten}
+        ingredients={ingredients}
         onDeleteIngredient={handleDeleteIngredient}
       />
       <br />
@@ -159,9 +164,9 @@ export default function ProductForm() {
         label="Allergenspuren"
         id="traces"
         placeholder="z.B. Schalenfrüchte"
-        onAddIngredient={handleAddAllergen}
-        zutaten={allergene}
-        onDeleteIngredient={handleDeleteAllergen}
+        onAddIngredient={handleAddAllergyTraces}
+        ingredients={allergyTraces}
+        onDeleteIngredient={handleDeleteAllergyTrace}
       />
       <br />
       Bild hochladen:{" "}
@@ -199,8 +204,8 @@ export default function ProductForm() {
                 setNameField(praline.name);
                 setVersionField(praline.version);
                 setWeightField(praline.weight);
-                setZutaten(praline.ingredients);
-                setAllergene(praline.allergyTraces);
+                setIngredients(praline.ingredients);
+                setAllergyTraces(praline.allergyTraces);
               }}
             >
               bearbeiten

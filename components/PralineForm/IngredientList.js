@@ -4,7 +4,7 @@ export default function IngredientList({
   label,
   id,
   onAddIngredient,
-  zutaten,
+  ingredients,
   onDeleteIngredient,
   placeholder = "",
 }) {
@@ -14,8 +14,8 @@ export default function IngredientList({
   function handleAddIngredient(event) {
     event.preventDefault();
 
-    const zutatenMitMenge = { ingredient: value, amount: amount };
-    onAddIngredient(zutatenMitMenge);
+    const ingredientWithAmount = { ingredient: value, amount: amount };
+    onAddIngredient(ingredientWithAmount);
     setValue("");
     setAmount("");
   }
@@ -49,9 +49,10 @@ export default function IngredientList({
         </button>
       </label>
       <ul>
-        {zutaten.map((zutat) => (
-          <li key={zutat.id}>
-            {zutat.ingredient} {zutat.amount} g{" "}
+        {ingredients.map((ingredient) => (
+          // TODO: save id in database
+          <li key={ingredient.id}>
+            {ingredient.ingredient} {ingredient.amount} g{" "}
             <button type="button" onClick={() => onDeleteIngredient(zutat.id)}>
               -
             </button>
