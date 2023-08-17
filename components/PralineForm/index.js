@@ -184,13 +184,15 @@ export default function ProductForm() {
           <li key={praline._id}>
             <p>{praline.name}</p>
 
-            <Image
-              width="100"
-              height="100"
-              src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${praline.imageId}.png`}
-              sizes="50vw"
-              alt={praline.name}
-            />
+            {praline.imageId && (
+              <Image
+                width="100"
+                height="100"
+                src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${praline.imageId}.png`}
+                sizes="50vw"
+                alt={praline.name}
+              />
+            )}
             <button
               type="button"
               onClick={() => {

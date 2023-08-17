@@ -50,7 +50,6 @@ export default function IngredientList({
       </label>
       <ul>
         {ingredients.map((ingredient) => (
-          // TODO: save id in database
           <li key={ingredient.id}>
             {ingredient.ingredient} {ingredient.amount} g{" "}
             <button type="button" onClick={() => onDeleteIngredient(zutat.id)}>
