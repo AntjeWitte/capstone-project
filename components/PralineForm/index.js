@@ -32,7 +32,7 @@ export default function ProductForm() {
 
   function handleDeleteAllergyTrace(id) {
     setAllergyTraces(
-      allergyTraces.filter((allergyTrace) => allergyTrace.id !== id)
+      allergyTraces.filter((allergyTrace) => allergyTrace.id !== id),
     );
   }
 

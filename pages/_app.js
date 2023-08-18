@@ -1,6 +1,6 @@
-import Head from 'next/head';
-import { SWRConfig } from 'swr';
-import GlobalStyle from '@/styles';
+import Head from "next/head";
+import { SWRConfig } from "swr";
+import GlobalStyle from "@/styles";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
 

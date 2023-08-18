@@ -9,4 +9,6 @@ export default async function handler(request, response) {
     await Praline.findByIdAndDelete(id);
     return response.status(200).json({ status: "Praline deleted" });
   }
+
+  return response.status(404);
 }
