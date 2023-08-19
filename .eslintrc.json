@@ -9,6 +9,7 @@
     "react/jsx-one-expression-per-line": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
+    "import/prefer-default-export": "off",
     "object-shorthand": "off"
   }
 }

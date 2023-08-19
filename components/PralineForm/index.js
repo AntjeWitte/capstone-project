@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { uid } from "uid";
 import useSWR from "swr";
 import { CldUploadButton } from "next-cloudinary";
-import Image from "next/image";
+
 import IngredientList from "./IngredientList";
 import InputField from "./InputField";
+import Modal from "../Modal/Modal";
+import PralineList from "../PralineList/PralineList";
 
 export default function ProductForm() {
   const [ingredients, setIngredients] = useState([]);
@@ -14,6 +16,8 @@ export default function ProductForm() {
   const [versionField, setVersionField] = useState("");
   const [weightField, setWeightField] = useState("");
   const [imageId, setImageId] = useState(null);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   function handleAddIngredient(newIngredient) {
     setIngredients([...ingredients, { ...newIngredient, id: uid() }]);
@@ -32,7 +36,7 @@ export default function ProductForm() {
 
   function handleDeleteAllergyTrace(id) {
     setAllergyTraces(
-      allergyTraces.filter((allergyTrace) => allergyTrace.id !== id),
+      allergyTraces.filter((allergyTrace) => allergyTrace.id !== id)
     );
   }
 
@@ -111,104 +115,87 @@ export default function ProductForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <h2>{currentPraline ? "Pralinen bearbeiten" : "Pralinen erstellen"}</h2>
       <br />
-      <button type="button">Praline bearbeiten</button>
+      <button type="button" onClick={() => setIsModalVisible(true)}>
+        Praline bearbeiten
+      </button>
+      {isModalVisible && (
+        <Modal onClose={() => setIsModalVisible(false)} title="Pralinenauswahl">
+          <PralineList
+            onSelectPraline={(praline) => {
+              setCurrentPraline(praline);
+              setNameField(praline.name);
+              setVersionField(praline.version);
+              setWeightField(praline.weight);
+              setIngredients(praline.ingredients);
+              setAllergyTraces(praline.allergyTraces);
+            }}
+          />
+        </Modal>
+      )}
       <button type="button" disabled={!currentPraline} onClick={handleDelete}>
         Praline löschen
       </button>
       <br />
-      <InputField
-        id="name"
-        label="Name"
-        value={nameField}
-        onChange={(event) => {
-          setNameField(event.target.value);
-        }}
-      />
-      <br />
-      <InputField
-        id="version"
-        label="Version"
-        value={versionField}
-        onChange={(event) => {
-          setVersionField(event.target.value);
-        }}
-      />
-      <br />
-      <InputField
-        id="weight"
-        label="Gewicht"
-        value={weightField}
-        onChange={(event) => {
-          setWeightField(event.target.value);
-        }}
-      />
-      <br />
-      <IngredientList
-        label="Zutaten"
-        id="ingredient"
-        onAddIngredient={handleAddIngredient}
-        ingredients={ingredients}
-        onDeleteIngredient={handleDeleteIngredient}
-      />
-      <br />
-      <IngredientList
-        label="Allergenspuren"
-        id="traces"
-        placeholder="z.B. Schalenfrüchte"
-        onAddIngredient={handleAddAllergyTraces}
-        ingredients={allergyTraces}
-        onDeleteIngredient={handleDeleteAllergyTrace}
-      />
-      <br />
-      Bild hochladen:{" "}
-      <CldUploadButton
-        uploadPreset="lyzzky1u"
-        onUpload={({ info }) => setImageId(info.public_id)}
-      />
-      <br />
-      <button type="button" onClick={cancel}>
-        Zurücksetzen
-      </button>
-      <button type="submit">Speichern / hinzufügen</button>
-      <br />
-      <hr />
-      <p>
-        Hilfsweise Darstellung der Pralinen aus der Datenbank (nur zu
-        Testzwecken):
-      </p>
-      <ul>
-        {data.map((praline) => (
-          <li key={praline._id}>
-            <p>{praline.name}</p>
-
-            {praline.imageId && (
-              <Image
-                width="100"
-                height="100"
-                src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${praline.imageId}.png`}
-                sizes="50vw"
-                alt={praline.name}
-              />
-            )}
-            <button
-              type="button"
-              onClick={() => {
-                setCurrentPraline(praline);
-                setNameField(praline.name);
-                setVersionField(praline.version);
-                setWeightField(praline.weight);
-                setIngredients(praline.ingredients);
-                setAllergyTraces(praline.allergyTraces);
-              }}
-            >
-              bearbeiten
-            </button>
-          </li>
-        ))}
-      </ul>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <InputField
+          id="name"
+          label="Name"
+          value={nameField}
+          onChange={(event) => {
+            setNameField(event.target.value);
+          }}
+        />
+        <br />
+        <InputField
+          id="version"
+          label="Version"
+          value={versionField}
+          onChange={(event) => {
+            setVersionField(event.target.value);
+          }}
+        />
+        <br />
+        <InputField
+          id="weight"
+          label="Gewicht"
+          value={weightField}
+          onChange={(event) => {
+            setWeightField(event.target.value);
+          }}
+        />
+        <br />
+        <IngredientList
+          label="Zutaten"
+          id="ingredient"
+          onAddIngredient={handleAddIngredient}
+          ingredients={ingredients}
+          onDeleteIngredient={handleDeleteIngredient}
+        />
+        <br />
+        <IngredientList
+          label="Allergenspuren"
+          id="traces"
+          placeholder="z.B. Schalenfrüchte"
+          onAddIngredient={handleAddAllergyTraces}
+          ingredients={allergyTraces}
+          onDeleteIngredient={handleDeleteAllergyTrace}
+        />
+        <br />
+        Bild hochladen:{" "}
+        <CldUploadButton
+          uploadPreset="lyzzky1u"
+          onUpload={({ info }) => setImageId(info.public_id)}
+        />
+        <br />
+        <button type="button" onClick={cancel}>
+          Zurücksetzen
+        </button>
+        <button type="submit">Speichern / hinzufügen</button>
+        <br />
+      </form>
+    </>
   );
 }
