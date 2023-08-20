@@ -17,4 +17,5 @@ export const StyledModal = styled.div`
   right: 8px;
   bottom: 8px;
   border-radius: 16px;
+  overflow: auto;
 `;

@@ -11,7 +11,9 @@ import PralineList from "../PralineList/PralineList";
 export default function ProductForm() {
   const [ingredients, setIngredients] = useState([]);
   const [allergyTraces, setAllergyTraces] = useState([]);
-  const [currentPraline, setCurrentPraline] = useState(null);
+  // eslint-disable-next-line operator-linebreak
+  const [pralineSelectedForEditing, setPralineSelectedForEditing] =
+    useState(null);
   const [nameField, setNameField] = useState("");
   const [versionField, setVersionField] = useState("");
   const [weightField, setWeightField] = useState("");
@@ -43,7 +45,7 @@ export default function ProductForm() {
   function cancel() {
     setIngredients([]);
     setAllergyTraces([]);
-    setCurrentPraline(null);
+    setPralineSelectedForEditing(null);
     setNameField("");
     setVersionField("");
     setWeightField("");
@@ -99,8 +101,45 @@ export default function ProductForm() {
     event.target.elements[0].focus();
   }
 
+  async function handleEdit(event) {
+    event.preventDefault();
+    console.log("###### EDIT");
+
+    if (ingredients.length === 0) {
+      console.warning("No ingredient selected");
+      return;
+    }
+
+    const formData = new FormData(event.target);
+    const pralineData = Object.fromEntries(formData);
+
+    const response = await fetch(
+      `/api/pralinen/${pralineSelectedForEditing._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pralineData),
+      }
+    );
+
+    if (response.ok) {
+      mutate();
+
+      setIngredients([]);
+      setAllergyTraces([]);
+      setNameField("");
+      setVersionField("");
+      setWeightField("");
+      setPralineSelectedForEditing(null);
+    }
+  }
+
+  console.log("pralineSelectedForEditing", pralineSelectedForEditing);
+
   async function handleDelete() {
-    await fetch(`/api/pralinen/${currentPraline._id}`, {
+    await fetch(`/api/pralinen/${pralineSelectedForEditing._id}`, {
       method: "DELETE",
     });
 
@@ -111,12 +150,16 @@ export default function ProductForm() {
     setNameField("");
     setVersionField("");
     setWeightField("");
-    setCurrentPraline(null);
+    setPralineSelectedForEditing(null);
   }
 
   return (
     <>
-      <h2>{currentPraline ? "Pralinen bearbeiten" : "Pralinen erstellen"}</h2>
+      <h2>
+        {pralineSelectedForEditing
+          ? "Pralinen bearbeiten"
+          : "Pralinen erstellen"}
+      </h2>
       <br />
       <button type="button" onClick={() => setIsModalVisible(true)}>
         Praline bearbeiten
@@ -125,7 +168,7 @@ export default function ProductForm() {
         <Modal onClose={() => setIsModalVisible(false)} title="Pralinenauswahl">
           <PralineList
             onSelectPraline={(praline) => {
-              setCurrentPraline(praline);
+              setPralineSelectedForEditing(praline);
               setNameField(praline.name);
               setVersionField(praline.version);
               setWeightField(praline.weight);
@@ -135,11 +178,15 @@ export default function ProductForm() {
           />
         </Modal>
       )}
-      <button type="button" disabled={!currentPraline} onClick={handleDelete}>
+      <button
+        type="button"
+        disabled={!pralineSelectedForEditing}
+        onClick={handleDelete}
+      >
         Praline löschen
       </button>
       <br />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={pralineSelectedForEditing ? handleEdit : handleSubmit}>
         <InputField
           id="name"
           label="Name"
@@ -193,7 +240,10 @@ export default function ProductForm() {
         <button type="button" onClick={cancel}>
           Zurücksetzen
         </button>
-        <button type="submit">Speichern / hinzufügen</button>
+        <button type="submit">
+          {" "}
+          {pralineSelectedForEditing ? "Speichern" : "Hinzufügen"}{" "}
+        </button>
         <br />
       </form>
     </>
