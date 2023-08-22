@@ -103,10 +103,9 @@ export default function ProductForm() {
 
   async function handleEdit(event) {
     event.preventDefault();
-    console.log("###### EDIT");
 
     if (ingredients.length === 0) {
-      console.warning("No ingredient selected");
+      console.warn("No ingredient selected");
       return;
     }
 
@@ -144,8 +143,6 @@ export default function ProductForm() {
       setPralineSelectedForEditing(null);
     }
   }
-
-  console.log("pralineSelectedForEditing", pralineSelectedForEditing);
 
   async function handleDelete() {
     await fetch(`/api/pralinen/${pralineSelectedForEditing._id}`, {
