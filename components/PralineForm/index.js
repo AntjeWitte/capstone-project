@@ -113,6 +113,15 @@ export default function ProductForm() {
     const formData = new FormData(event.target);
     const pralineData = Object.fromEntries(formData);
 
+    const editedPraline = {
+      name: pralineData.name,
+      version: pralineData.version,
+      weight: pralineData.weight,
+      imageId: imageId,
+      ingredients: ingredients,
+      allergyTraces: allergyTraces,
+    };
+
     const response = await fetch(
       `/api/pralinen/${pralineSelectedForEditing._id}`,
       {
@@ -120,7 +129,7 @@ export default function ProductForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(pralineData),
+        body: JSON.stringify(editedPraline),
       }
     );
 
@@ -172,6 +181,7 @@ export default function ProductForm() {
               setNameField(praline.name);
               setVersionField(praline.version);
               setWeightField(praline.weight);
+              setImageId(praline.imageId);
               setIngredients(praline.ingredients);
               setAllergyTraces(praline.allergyTraces);
             }}
