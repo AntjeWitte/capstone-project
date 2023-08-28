@@ -3,6 +3,7 @@ import { uid } from "uid";
 import useSWR from "swr";
 import { CldUploadButton } from "next-cloudinary";
 
+import Link from "next/link";
 import IngredientList from "./IngredientList";
 import InputField from "./InputField";
 import Modal from "../Modal/Modal";
@@ -182,6 +183,7 @@ export default function ProductForm() {
               setIngredients(praline.ingredients);
               setAllergyTraces(praline.allergyTraces);
             }}
+            buttonName="bearbeiten"
           />
         </Modal>
       )}
@@ -260,6 +262,7 @@ export default function ProductForm() {
         </button>
         <br />
       </form>
+      <Link href="/">Zurück zur Pralinenschachtel</Link>
     </>
   );
 }

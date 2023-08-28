@@ -1,7 +1,8 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { Inter } from "next/font/google";
-import PralineForm from "../components/PralineForm";
+// import ProductForm from "../components/PralineForm";
+import MainPage from "@/components/PralineBox";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,8 @@ export default function Home() {
       </Head>
       <main className={inter.className}>
         <Heading>Pralinenschachtel Konfigurator 🍱</Heading>
-        <PralineForm />
+        {/* <ProductForm /> */}
+        <MainPage />
       </main>
     </>
   );
