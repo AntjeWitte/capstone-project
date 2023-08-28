@@ -14,7 +14,7 @@ export default function IngredientList({
   function handleAddIngredient(event) {
     event.preventDefault();
 
-    const ingredientWithAmount = { ingredient: value, amount };
+    const ingredientWithAmount = { ingredient: value, amount: amount };
     onAddIngredient(ingredientWithAmount);
     setValue("");
     setAmount("");
@@ -24,6 +24,12 @@ export default function IngredientList({
     <>
       <label htmlFor={id}>
         {`${label}: `}
+        {/* <select name={id} id={id}>
+          <option value="empty"> </option>
+          <option value="zucker">Zucker</option>
+          <option value="kakaomasse">Kakaomasse</option>
+          <option value="vollmilchpulver">Vollmilchpulver</option>
+        </select> */}
         <input
           type="text"
           id={id}

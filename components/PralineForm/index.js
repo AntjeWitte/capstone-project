@@ -195,6 +195,7 @@ export default function ProductForm() {
       <br />
       <form onSubmit={pralineSelectedForEditing ? handleEdit : handleSubmit}>
         <InputField
+          type="text"
           id="name"
           label="Name"
           value={nameField}
@@ -204,8 +205,10 @@ export default function ProductForm() {
         />
         <br />
         <InputField
+          type="text"
           id="version"
           label="Version"
+          placeholder="z.B. VS5"
           value={versionField}
           onChange={(event) => {
             setVersionField(event.target.value);
@@ -215,6 +218,10 @@ export default function ProductForm() {
         <InputField
           id="weight"
           label="Gewicht"
+          type="number"
+          min="5.0"
+          max="15.0"
+          step="0.1"
           value={weightField}
           onChange={(event) => {
             setWeightField(event.target.value);
