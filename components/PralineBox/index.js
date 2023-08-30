@@ -15,10 +15,15 @@ export default function MainPage() {
   const [boxsize, setBoxsize] = useState(9);
   const [pralineList, setPralineList] = useState([]);
   const [pralineBoxName, setPralineBoxName] = useState(null);
-  const [ingredientList, setIngredientList] = useState(null);
+  const [ingredientList, setIngredientList] = useState([]);
+  const [ingredientListAll, setIngredientListAll] = useState([]);
+  const [weight, setWeight] = useState(0);
 
   function cancel() {
     setPralineList([]);
+    setIngredientList([]);
+    setIngredientListAll([]);
+    setWeight(0);
   }
   console.log("selectedPraline", selectedPraline);
 
@@ -29,8 +34,20 @@ export default function MainPage() {
   }
   console.log("pralineList", pralineList);
 
+  function handlePralineWeight(praline) {
+    setWeight(parseFloat(weight, 10) + parseFloat(praline.weight, 10));
+
+    return weight;
+  }
+
   function handleUpdateIngredients(praline) {
     const { ingredients } = praline;
+
+    setIngredientListAll([
+      ...ingredientListAll,
+      { ...ingredients, id: slotId },
+    ]);
+
     setIngredientList(
       ingredients.map((ingredient) => (
         <div key={ingredient.id}>{ingredient.ingredient},</div>
@@ -39,6 +56,9 @@ export default function MainPage() {
 
     return ingredientList;
   }
+
+  console.log("ingredientListAll", ingredientListAll);
+  console.log("ingredientList", ingredientList);
 
   const getBoxes = () => {
     const boxes = [];
@@ -104,10 +124,12 @@ export default function MainPage() {
               setSelectedPraline(praline);
               handleAddPraline(praline);
               handleUpdateIngredients(praline);
+              handlePralineWeight(praline);
             }}
           />
         </Modal>
       )}
+      <div>Gewicht: {weight} g</div>
       <div>Zutaten: {ingredientList}</div>
       <button type="button" onClick={cancel}>
         Pralinenschachtel zurücksetzen
