@@ -221,8 +221,8 @@ export default function ProductForm() {
           id="weight"
           label="Gewicht"
           type="number"
-          min="5.0"
-          max="15.0"
+          min="5.5"
+          max="20.5"
           step="0.1"
           value={weightField}
           onChange={(event) => {
@@ -233,6 +233,7 @@ export default function ProductForm() {
         <IngredientList
           label="Zutaten"
           id="ingredient"
+          placeholder="z.B. Kakaobutter"
           onAddIngredient={handleAddIngredient}
           ingredients={ingredients}
           onDeleteIngredient={handleDeleteIngredient}

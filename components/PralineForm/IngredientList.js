@@ -24,12 +24,6 @@ export default function IngredientList({
     <>
       <label htmlFor={id}>
         {`${label}: `}
-        {/* <select name={id} id={id}>
-          <option value="empty"> </option>
-          <option value="zucker">Zucker</option>
-          <option value="kakaomasse">Kakaomasse</option>
-          <option value="vollmilchpulver">Vollmilchpulver</option>
-        </select> */}
         <input
           type="text"
           id={id}
@@ -44,6 +38,7 @@ export default function IngredientList({
           type="text"
           id={`${id}-amount`}
           name={`${id}-amount`}
+          placeholder="Gewicht in g"
           value={amount}
           onChange={(event) => {
             setAmount(event.target.value);

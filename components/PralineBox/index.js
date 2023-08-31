@@ -9,23 +9,33 @@ import PralineList from "../PralineList/PralineList";
 export default function MainPage() {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  // eslint-disable-next-line operator-linebreak
-  const [selectedPraline, setSelectedPraline] = useState(null);
   const [slotId, setSlotId] = useState(null);
   const [boxsize, setBoxsize] = useState(9);
   const [pralineList, setPralineList] = useState([]);
-  const [pralineBoxName, setPralineBoxName] = useState(null);
-  const [ingredientList, setIngredientList] = useState([]);
-  const [ingredientListAll, setIngredientListAll] = useState([]);
-  const [weight, setWeight] = useState(0);
+  const [pralineBoxName, setPralineBoxName] = useState("");
 
   function cancel() {
     setPralineList([]);
-    setIngredientList([]);
-    setIngredientListAll([]);
-    setWeight(0);
   }
-  console.log("selectedPraline", selectedPraline);
+
+  const ingredientSum = pralineList
+    .map((praline) => praline.ingredients)
+    .flat()
+    .reduce(
+      (sum, current) => ({
+        ...sum,
+        [current.ingredient]:
+          (sum[current.ingredient] || 0) + parseInt(current.amount, 10),
+      }),
+      {}
+    );
+
+  const ingredientList = Object.entries(ingredientSum)
+    .map(([name, amount]) => ({
+      name,
+      amount,
+    }))
+    .sort((a, b) => (a.amount > b.amount ? -1 : 1));
 
   function handleAddPraline(newpraline) {
     const newArray = pralineList;
@@ -34,31 +44,10 @@ export default function MainPage() {
   }
   console.log("pralineList", pralineList);
 
-  function handlePralineWeight(praline) {
-    setWeight(parseFloat(weight, 10) + parseFloat(praline.weight, 10));
-
-    return weight;
-  }
-
-  function handleUpdateIngredients(praline) {
-    const { ingredients } = praline;
-
-    setIngredientListAll([
-      ...ingredientListAll,
-      { ...ingredients, id: slotId },
-    ]);
-
-    setIngredientList(
-      ingredients.map((ingredient) => (
-        <div key={ingredient.id}>{ingredient.ingredient},</div>
-      ))
-    );
-
-    return ingredientList;
-  }
-
-  console.log("ingredientListAll", ingredientListAll);
-  console.log("ingredientList", ingredientList);
+  const weightSum = pralineList.reduce(
+    (sum, current) => sum + parseFloat(current.weight, 10),
+    0
+  );
 
   const getBoxes = () => {
     const boxes = [];
@@ -83,7 +72,6 @@ export default function MainPage() {
               alt={pralineList[i]?.name}
             />
           )}
-          {/* {pralineList[i]?.imageId} */}
         </StyledBox>
       );
     }
@@ -121,16 +109,18 @@ export default function MainPage() {
           <PralineList
             buttonName="auswählen"
             onSelectPraline={(praline) => {
-              setSelectedPraline(praline);
               handleAddPraline(praline);
-              handleUpdateIngredients(praline);
-              handlePralineWeight(praline);
             }}
           />
         </Modal>
       )}
-      <div>Gewicht: {weight} g</div>
-      <div>Zutaten: {ingredientList}</div>
+      <div>Gewicht: {weightSum} g</div>
+      <div>
+        Zutaten:{" "}
+        <div>
+          {ingredientList.map((ingredient) => ingredient.name).join(", ")}
+        </div>
+      </div>
       <button type="button" onClick={cancel}>
         Pralinenschachtel zurücksetzen
       </button>
