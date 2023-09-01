@@ -16,6 +16,7 @@ export default function MainPage() {
 
   function cancel() {
     setPralineList([]);
+    setPralineBoxName("");
   }
 
   const ingredientSum = pralineList
@@ -31,6 +32,25 @@ export default function MainPage() {
     );
 
   const ingredientList = Object.entries(ingredientSum)
+    .map(([name, amount]) => ({
+      name,
+      amount,
+    }))
+    .sort((a, b) => (a.amount > b.amount ? -1 : 1));
+
+  const allergySum = pralineList
+    .map((praline) => praline.allergyTraces)
+    .flat()
+    .reduce(
+      (sum, current) => ({
+        ...sum,
+        [current.ingredient]:
+          (sum[current.ingredient] || 0) + parseInt(current.amount, 10),
+      }),
+      {}
+    );
+
+  const allergyList = Object.entries(allergySum)
     .map(([name, amount]) => ({
       name,
       amount,
@@ -120,6 +140,10 @@ export default function MainPage() {
         <div>
           {ingredientList.map((ingredient) => ingredient.name).join(", ")}
         </div>
+      </div>
+      <div>
+        Allergenspuren:{" "}
+        <div>{allergyList.map((ingredient) => ingredient.name).join(", ")}</div>
       </div>
       <button type="button" onClick={cancel}>
         Pralinenschachtel zurücksetzen
