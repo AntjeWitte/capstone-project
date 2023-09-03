@@ -7,6 +7,8 @@ export const StyledWrapper = styled.div`
   margin: 20px;
   border-radius: 16px;
   gap: 10px;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 `;
 
 export const StyledBox = styled.div`
@@ -16,4 +18,21 @@ export const StyledBox = styled.div`
   padding-top: 25px;
   padding-bottom: 25px;
   border-radius: 8px;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+`;
+
+export const Print = styled.div`
+  @media print {
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    background-color: white;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
 `;

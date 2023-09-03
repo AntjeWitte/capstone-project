@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Image from "next/image";
 import InputField from "../PralineForm/InputField";
-import { StyledBox, StyledWrapper } from "./box.styled";
+import { Print, StyledBox, StyledWrapper } from "./box.styled";
 import Modal from "../Modal/Modal";
 import PralineList from "../PralineList/PralineList";
 
@@ -121,34 +121,43 @@ export default function MainPage() {
           setPralineBoxName(event.target.value);
         }}
       />
-      <h2>{pralineBoxName}</h2>
-      <StyledWrapper>{getBoxes()}</StyledWrapper>
+      <Print>
+        <h2>{pralineBoxName}</h2>
+        <StyledWrapper>{getBoxes()}</StyledWrapper>
 
-      {isModalVisible && (
-        <Modal onClose={() => setIsModalVisible(false)} title="Pralinenauswahl">
-          <PralineList
-            buttonName="auswählen"
-            onSelectPraline={(praline) => {
-              handleAddPraline(praline);
-            }}
-          />
-        </Modal>
-      )}
-      <div>Gewicht: {weightSum} g</div>
-      <div>
-        Zutaten:{" "}
+        {isModalVisible && (
+          <Modal
+            onClose={() => setIsModalVisible(false)}
+            title="Pralinenauswahl"
+          >
+            <PralineList
+              buttonName="auswählen"
+              onSelectPraline={(praline) => {
+                handleAddPraline(praline);
+              }}
+            />
+          </Modal>
+        )}
+        <div>Gewicht: {weightSum} g</div>
         <div>
-          {ingredientList.map((ingredient) => ingredient.name).join(", ")}
+          Zutaten:{" "}
+          <div>
+            {ingredientList.map((ingredient) => ingredient.name).join(", ")}
+          </div>
         </div>
-      </div>
-      <div>
-        Allergenspuren:{" "}
-        <div>{allergyList.map((ingredient) => ingredient.name).join(", ")}</div>
-      </div>
+        <div>
+          Allergenspuren:{" "}
+          <div>
+            {allergyList.map((ingredient) => ingredient.name).join(", ")}
+          </div>
+        </div>
+      </Print>
       <button type="button" onClick={cancel}>
         Pralinenschachtel zurücksetzen
       </button>
-      <button type="button">Speichern / Drucken</button>
+      <button type="button" onClick={() => window.print()}>
+        Speichern / Drucken
+      </button>
       <button
         type="button"
         onClick={() => {

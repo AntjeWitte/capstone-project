@@ -18,4 +18,7 @@ export const StyledModal = styled.div`
   bottom: 8px;
   border-radius: 16px;
   overflow: auto;
+  @media print {
+    display: none;
+  }
 `;
