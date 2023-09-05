@@ -212,8 +212,15 @@ export default function ProductForm() {
           label="Version"
           placeholder="z.B. VS5"
           value={versionField}
+          // onChange={(event) => {
+          //   setVersionField(event.target.value);
+          // }}
           onChange={(event) => {
-            setVersionField(event.target.value);
+            const { value } = event.target;
+
+            const fixedValue = Math.max(0, Math.min(25, value));
+
+            setVersionField(value > 0 ? fixedValue : " ");
           }}
         />
         <br />
@@ -225,8 +232,15 @@ export default function ProductForm() {
           max="20.5"
           step="0.1"
           value={weightField}
+          // onChange={(event) => {
+          //   setWeightField(event.target.value);
+          // }}
           onChange={(event) => {
-            setWeightField(event.target.value);
+            const { value } = event.target;
+
+            const fixedValue = Math.max(5, Math.min(20, value));
+
+            setWeightField(value > 0 ? fixedValue : " ");
           }}
         />
         <br />
