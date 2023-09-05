@@ -62,7 +62,6 @@ export default function MainPage() {
     newArray[slotId] = newpraline;
     setPralineList(newArray);
   }
-  console.log("pralineList", pralineList);
 
   const weightSum = pralineList.reduce(
     (sum, current) => sum + parseFloat(current.weight, 10),
