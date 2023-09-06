@@ -36,7 +36,7 @@ export default function MainPage() {
       name,
       amount,
     }))
-    .sort((a, b) => b.amount > a.amount);
+    .sort((a, b) => b.amount - a.amount);
 
   const allergySum = pralineList
     .map((praline) => praline.allergyTraces)
@@ -55,7 +55,7 @@ export default function MainPage() {
       name,
       amount,
     }))
-    .sort((a, b) => b.amount > a.amount);
+    .sort((a, b) => b.amount - a.amount);
 
   function handleAddPraline(newpraline) {
     const newArray = pralineList;
