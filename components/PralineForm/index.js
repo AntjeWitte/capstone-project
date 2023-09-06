@@ -183,8 +183,9 @@ export default function ProductForm() {
               setIngredients(praline.ingredients);
               setAllergyTraces(praline.allergyTraces);
             }}
-            buttonName="bearbeiten"
-          />
+          >
+            bearbeiten
+          </PralineList>
         </Modal>
       )}
       <button
@@ -207,10 +208,9 @@ export default function ProductForm() {
         />
         <br />
         <InputField
-          type="text"
+          type="number"
           id="version"
           label="Version"
-          placeholder="z.B. VS5"
           value={versionField}
           onChange={(event) => {
             const { value } = event.target;
@@ -225,8 +225,6 @@ export default function ProductForm() {
           id="weight"
           label="Gewicht"
           type="number"
-          min="5.5"
-          max="20.5"
           step="0.1"
           value={weightField}
           onChange={(event) => {

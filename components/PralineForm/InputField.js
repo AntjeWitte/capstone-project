@@ -4,8 +4,6 @@ export default function InputField({
   label,
   value,
   onChange,
-  min,
-  max,
   placeholder,
   step,
 }) {
@@ -16,8 +14,6 @@ export default function InputField({
         type={type}
         id={id}
         name={id}
-        min={min}
-        max={max}
         step={step}
         placeholder={placeholder}
         value={value}

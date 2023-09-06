@@ -36,7 +36,7 @@ export default function MainPage() {
       name,
       amount,
     }))
-    .sort((a, b) => (a.amount > b.amount ? -1 : 1));
+    .sort((a, b) => b.amount > a.amount);
 
   const allergySum = pralineList
     .map((praline) => praline.allergyTraces)
@@ -55,7 +55,7 @@ export default function MainPage() {
       name,
       amount,
     }))
-    .sort((a, b) => (a.amount > b.amount ? -1 : 1));
+    .sort((a, b) => b.amount > a.amount);
 
   function handleAddPraline(newpraline) {
     const newArray = pralineList;
@@ -101,13 +101,15 @@ export default function MainPage() {
     <>
       <InputField
         type="number"
-        min="3"
-        max="16"
         id="boxsize"
         label="Gewünschte Pralinenanzahl"
         value={boxsize}
         onChange={(event) => {
-          setBoxsize(event.target.value);
+          const { value } = event.target;
+
+          const fixedValue = Math.max(3, Math.min(24, value));
+
+          setBoxsize(value > 0 ? fixedValue : " ");
         }}
       />
       <br />
@@ -130,11 +132,12 @@ export default function MainPage() {
             title="Pralinenauswahl"
           >
             <PralineList
-              buttonName="auswählen"
               onSelectPraline={(praline) => {
                 handleAddPraline(praline);
               }}
-            />
+            >
+              auswählen
+            </PralineList>
           </Modal>
         )}
         <div>Gewicht: {weightSum} g</div>

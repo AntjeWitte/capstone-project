@@ -8,7 +8,7 @@ export const StyledWrapper = styled.div`
   border-radius: 16px;
   gap: 10px;
   print-color-adjust: exact;
-  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 `;
 
 export const StyledBox = styled.div`
@@ -19,7 +19,7 @@ export const StyledBox = styled.div`
   padding-bottom: 25px;
   border-radius: 8px;
   print-color-adjust: exact;
-  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 `;
 
 export const Print = styled.div`
@@ -33,6 +33,6 @@ export const Print = styled.div`
     padding: 24px;
     background-color: white;
     print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 `;
