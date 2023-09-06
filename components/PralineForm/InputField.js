@@ -1,13 +1,21 @@
 export default function InputField({
-  id, label, value, onChange,
+  type,
+  id,
+  label,
+  value,
+  onChange,
+  placeholder,
+  step,
 }) {
   return (
     <label htmlFor={id}>
       {`${label}: `}
       <input
-        type="text"
+        type={type}
         id={id}
         name={id}
+        step={step}
+        placeholder={placeholder}
         value={value}
         onChange={onChange}
         required

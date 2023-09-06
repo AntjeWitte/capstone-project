@@ -14,7 +14,7 @@ export default function IngredientList({
   function handleAddIngredient(event) {
     event.preventDefault();
 
-    const ingredientWithAmount = { ingredient: value, amount };
+    const ingredientWithAmount = { ingredient: value, amount: amount };
     onAddIngredient(ingredientWithAmount);
     setValue("");
     setAmount("");
@@ -38,6 +38,7 @@ export default function IngredientList({
           type="text"
           id={`${id}-amount`}
           name={`${id}-amount`}
+          placeholder="Gewicht in g"
           value={amount}
           onChange={(event) => {
             setAmount(event.target.value);

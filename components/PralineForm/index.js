@@ -3,6 +3,7 @@ import { uid } from "uid";
 import useSWR from "swr";
 import { CldUploadButton } from "next-cloudinary";
 
+import Link from "next/link";
 import IngredientList from "./IngredientList";
 import InputField from "./InputField";
 import Modal from "../Modal/Modal";
@@ -182,7 +183,9 @@ export default function ProductForm() {
               setIngredients(praline.ingredients);
               setAllergyTraces(praline.allergyTraces);
             }}
-          />
+          >
+            bearbeiten
+          </PralineList>
         </Modal>
       )}
       <button
@@ -195,6 +198,7 @@ export default function ProductForm() {
       <br />
       <form onSubmit={pralineSelectedForEditing ? handleEdit : handleSubmit}>
         <InputField
+          type="text"
           id="name"
           label="Name"
           value={nameField}
@@ -204,26 +208,38 @@ export default function ProductForm() {
         />
         <br />
         <InputField
+          type="number"
           id="version"
           label="Version"
           value={versionField}
           onChange={(event) => {
-            setVersionField(event.target.value);
+            const { value } = event.target;
+
+            const fixedValue = Math.max(0, Math.min(25, value));
+
+            setVersionField(value > 0 ? fixedValue : " ");
           }}
         />
         <br />
         <InputField
           id="weight"
           label="Gewicht"
+          type="number"
+          step="0.1"
           value={weightField}
           onChange={(event) => {
-            setWeightField(event.target.value);
+            const { value } = event.target;
+
+            const fixedValue = Math.max(5, Math.min(20, value));
+
+            setWeightField(value > 0 ? fixedValue : " ");
           }}
         />
         <br />
         <IngredientList
           label="Zutaten"
           id="ingredient"
+          placeholder="z.B. Kakaobutter"
           onAddIngredient={handleAddIngredient}
           ingredients={ingredients}
           onDeleteIngredient={handleDeleteIngredient}
@@ -253,6 +269,7 @@ export default function ProductForm() {
         </button>
         <br />
       </form>
+      <Link href="/">Zurück zur Pralinenschachtel</Link>
     </>
   );
 }

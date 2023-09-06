@@ -2,7 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import Image from "next/image";
 
-export default function PralineList({ onSelectPraline }) {
+export default function PralineList({ onSelectPraline, children }) {
   const { data, isLoading } = useSWR("/api/pralinen");
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -23,7 +23,7 @@ export default function PralineList({ onSelectPraline }) {
             />
           )}
           <button type="button" onClick={() => onSelectPraline(praline)}>
-            bearbeiten
+            {children}
           </button>
         </li>
       ))}
