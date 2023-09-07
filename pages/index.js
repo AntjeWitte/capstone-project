@@ -15,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={inter.className}>
-        <Heading>Pralinenschachtel Konfigurator 🍱</Heading>
+        <Heading>Pralinenschachtel Konfigurator</Heading>
         <MainPage />
       </main>
     </>
@@ -24,4 +24,7 @@ export default function Home() {
 
 const Heading = styled.h1`
   text-align: center;
+  color: var(--primary-font-color);
+  font-family: var(--primary-font);
+  font-size: 25px;
 `;

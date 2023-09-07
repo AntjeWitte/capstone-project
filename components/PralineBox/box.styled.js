@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 export const StyledWrapper = styled.div`
   display: grid;
-  background-color: grey;
-  grid-template-columns: 30% 30% 30%;
+  background-image: var(--gold-folie);
+  background-size: contain;
+  grid-template-columns: 1fr 1fr 1fr;
   margin: 20px;
+  padding: 10px;
   border-radius: 16px;
   gap: 10px;
   print-color-adjust: exact;
@@ -13,13 +16,20 @@ export const StyledWrapper = styled.div`
 
 export const StyledBox = styled.div`
   color: black;
-  margin: 20px;
-  background-color: white;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  background-color: var(--primary-font-color);
+  box-shadow: inset -4px -4px 15px 8px var(--secondary-background);
+  opacity: 0.7;
+  aspect-ratio: 1;
   border-radius: 8px;
+  overflow: hidden;
+  padding: 3px;
   print-color-adjust: exact;
   print-color-adjust: exact;
+`;
+
+export const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 export const Print = styled.div`
@@ -35,4 +45,25 @@ export const Print = styled.div`
     print-color-adjust: exact;
     print-color-adjust: exact;
   }
+`;
+
+export const StyledH2 = styled.h2`
+  text-align: center;
+  color: var(--primary-font-color);
+  font-family: var(--primary-font);
+  font-size: var(--secondary-font-size);
+`;
+
+export const StyledDiv = styled.div`
+  color: var(--primary-font-color);
+  font-family: var(--primary-font);
+  font-size: var(--primary-font-size);
+  font-weight: bold;
+`;
+
+export const StyledH1 = styled.h1`
+  text-align: center;
+  color: var(--primary-font-color);
+  font-family: var(--primary-font);
+  font-size: 25px;
 `;

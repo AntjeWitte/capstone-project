@@ -1,10 +1,18 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import Image from "next/image";
+
 import InputField from "../PralineForm/InputField";
-import { Print, StyledBox, StyledWrapper } from "./box.styled";
+import {
+  Print,
+  StyledBox,
+  StyledDiv,
+  StyledH2,
+  StyledImage,
+  StyledWrapper,
+} from "./box.styled";
 import Modal from "../Modal/Modal";
 import PralineList from "../PralineList/PralineList";
+import { StyledButton } from "../PralineForm/PralineForm.styled";
 
 export default function MainPage() {
   const router = useRouter();
@@ -81,9 +89,9 @@ export default function MainPage() {
             setSlotId(key);
           }}
         >
-          {pralineList[i]?.name}
+          {/* {pralineList[i]?.name} */}
           {pralineList[i]?.imageId && (
-            <Image
+            <StyledImage
               width="100"
               height="100"
               src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${pralineList[i].imageId}.png`}
@@ -123,7 +131,7 @@ export default function MainPage() {
         }}
       />
       <Print>
-        <h2>{pralineBoxName}</h2>
+        <StyledH2>{pralineBoxName}</StyledH2>
         <StyledWrapper>{getBoxes()}</StyledWrapper>
 
         {isModalVisible && (
@@ -140,34 +148,35 @@ export default function MainPage() {
             </PralineList>
           </Modal>
         )}
-        <div>Gewicht: {weightSum} g</div>
-        <div>
+
+        <StyledDiv>Gewicht: {weightSum} g</StyledDiv>
+        <StyledDiv>
           Zutaten:{" "}
           <div>
             {ingredientList.map((ingredient) => ingredient.name).join(", ")}
           </div>
-        </div>
-        <div>
+        </StyledDiv>
+        <StyledDiv>
           Allergenspuren:{" "}
           <div>
             {allergyList.map((ingredient) => ingredient.name).join(", ")}
           </div>
-        </div>
+        </StyledDiv>
       </Print>
-      <button type="button" onClick={cancel}>
+      <StyledButton type="button" onClick={cancel}>
         Pralinenschachtel zurücksetzen
-      </button>
-      <button type="button" onClick={() => window.print()}>
+      </StyledButton>
+      <StyledButton type="button" onClick={() => window.print()}>
         Speichern / Drucken
-      </button>
-      <button
+      </StyledButton>
+      <StyledButton
         type="button"
         onClick={() => {
           router.push("/pralinen/edit");
         }}
       >
         Pralinen anpassen
-      </button>
+      </StyledButton>
     </>
   );
 }

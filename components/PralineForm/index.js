@@ -3,11 +3,12 @@ import { uid } from "uid";
 import useSWR from "swr";
 import { CldUploadButton } from "next-cloudinary";
 
-import Link from "next/link";
 import IngredientList from "./IngredientList";
 import InputField from "./InputField";
 import Modal from "../Modal/Modal";
 import PralineList from "../PralineList/PralineList";
+import { StyledButton, StyledLink } from "./PralineForm.styled";
+import { StyledDiv, StyledH1 } from "../PralineBox/box.styled";
 
 export default function ProductForm() {
   const [ingredients, setIngredients] = useState([]);
@@ -162,15 +163,15 @@ export default function ProductForm() {
 
   return (
     <>
-      <h2>
+      <StyledH1>
         {pralineSelectedForEditing
-          ? "Pralinen bearbeiten"
+          ? "Praline bearbeiten"
           : "Pralinen erstellen"}
-      </h2>
+      </StyledH1>
       <br />
-      <button type="button" onClick={() => setIsModalVisible(true)}>
+      <StyledButton type="button" onClick={() => setIsModalVisible(true)}>
         Praline bearbeiten
-      </button>
+      </StyledButton>
       {isModalVisible && (
         <Modal onClose={() => setIsModalVisible(false)} title="Pralinenauswahl">
           <PralineList
@@ -188,13 +189,13 @@ export default function ProductForm() {
           </PralineList>
         </Modal>
       )}
-      <button
+      <StyledButton
         type="button"
         disabled={!pralineSelectedForEditing}
         onClick={handleDelete}
       >
         Praline löschen
-      </button>
+      </StyledButton>
       <br />
       <form onSubmit={pralineSelectedForEditing ? handleEdit : handleSubmit}>
         <InputField
@@ -254,22 +255,24 @@ export default function ProductForm() {
           onDeleteIngredient={handleDeleteAllergyTrace}
         />
         <br />
-        Bild hochladen:{" "}
-        <CldUploadButton
-          uploadPreset="lyzzky1u"
-          onUpload={({ info }) => setImageId(info.public_id)}
-        />
+        <StyledDiv>
+          Bild hochladen:{" "}
+          <CldUploadButton
+            uploadPreset="lyzzky1u"
+            onUpload={({ info }) => setImageId(info.public_id)}
+          />
+        </StyledDiv>
         <br />
-        <button type="button" onClick={cancel}>
+        <StyledButton type="button" onClick={cancel}>
           Zurücksetzen
-        </button>
-        <button type="submit">
+        </StyledButton>
+        <StyledButton type="submit">
           {" "}
           {pralineSelectedForEditing ? "Speichern" : "Hinzufügen"}{" "}
-        </button>
+        </StyledButton>
         <br />
       </form>
-      <Link href="/">Zurück zur Pralinenschachtel</Link>
+      <StyledLink href="/">Zurück zur Pralinenschachtel</StyledLink>
     </>
   );
 }

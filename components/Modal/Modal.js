@@ -1,14 +1,15 @@
 import React from "react";
 import { StyledBackground, StyledModal } from "./Modal.styled";
+import { StyledButton } from "../PralineForm/PralineForm.styled";
 
 export default function Modal({ onClose, title, children }) {
   return (
     <StyledBackground onClick={onClose}>
       <StyledModal>
         <h1> {title} </h1>
-        <button type="button" onClick={onClose}>
+        <StyledButton type="button" onClick={onClose}>
           x
-        </button>
+        </StyledButton>
         {children}
       </StyledModal>
     </StyledBackground>

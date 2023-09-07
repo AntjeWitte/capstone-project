@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import { StyledInputLabel } from "./InputField.styled";
+import { StyledButton } from "./PralineForm.styled";
+import {
+  StyledInputFieldIngredient,
+  StyledInputFieldWeight,
+  StyledList,
+} from "./IngredientList.styled";
 
 export default function IngredientList({
   label,
@@ -22,9 +29,9 @@ export default function IngredientList({
 
   return (
     <>
-      <label htmlFor={id}>
+      <StyledInputLabel htmlFor={id}>
         {`${label}: `}
-        <input
+        <StyledInputFieldIngredient
           type="text"
           id={id}
           name={id}
@@ -34,7 +41,7 @@ export default function IngredientList({
             setValue(event.target.value);
           }}
         />{" "}
-        <input
+        <StyledInputFieldWeight
           type="text"
           id={`${id}-amount`}
           name={`${id}-amount`}
@@ -45,21 +52,21 @@ export default function IngredientList({
           }}
         />{" "}
         g{" "}
-        <button type="button" onClick={handleAddIngredient}>
+        <StyledButton type="button" onClick={handleAddIngredient}>
           +
-        </button>
-      </label>
+        </StyledButton>
+      </StyledInputLabel>
       <ul>
         {ingredients.map((ingredient) => (
-          <li key={ingredient.id}>
+          <StyledList key={ingredient.id}>
             {ingredient.ingredient} {ingredient.amount} g{" "}
-            <button
+            <StyledButton
               type="button"
               onClick={() => onDeleteIngredient(ingredient.id)}
             >
               -
-            </button>
-          </li>
+            </StyledButton>
+          </StyledList>
         ))}
       </ul>
     </>

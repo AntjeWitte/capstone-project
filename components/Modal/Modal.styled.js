@@ -10,7 +10,14 @@ export const StyledBackground = styled.div`
 `;
 
 export const StyledModal = styled.div`
-  background: white;
+  background-image: var(--secondary-background-image);
+  height: "100vh";
+  background-size: "cover";
+  /* background: white; */
+  border: 2px solid black;
+  color: var(--primary-font-color);
+  font-family: var(--primary-font);
+  text-align: center;
   position: fixed;
   top: 110px;
   left: 8px;
