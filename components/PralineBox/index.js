@@ -6,13 +6,19 @@ import {
   Print,
   StyledBox,
   StyledDiv,
+  StyledDivBold,
   StyledH2,
   StyledImage,
   StyledWrapper,
 } from "./box.styled";
 import Modal from "../Modal/Modal";
 import PralineList from "../PralineList/PralineList";
-import { StyledButton } from "../PralineForm/PralineForm.styled";
+import {
+  GridContainer,
+  StyledButton,
+  StyledButtonBig,
+  StyledButtonOrange,
+} from "../PralineForm/PralineForm.styled";
 
 export default function MainPage() {
   const router = useRouter();
@@ -115,7 +121,7 @@ export default function MainPage() {
         onChange={(event) => {
           const { value } = event.target;
 
-          const fixedValue = Math.max(3, Math.min(24, value));
+          const fixedValue = Math.max(1, Math.min(24, value));
 
           setBoxsize(value > 0 ? fixedValue : " ");
         }}
@@ -149,34 +155,38 @@ export default function MainPage() {
           </Modal>
         )}
 
-        <StyledDiv>Gewicht: {weightSum} g</StyledDiv>
-        <StyledDiv>
+        <StyledDivBold>Gewicht: {weightSum} g</StyledDivBold>
+        <StyledDivBold>
           Zutaten:{" "}
-          <div>
+          <StyledDiv>
             {ingredientList.map((ingredient) => ingredient.name).join(", ")}
-          </div>
-        </StyledDiv>
-        <StyledDiv>
+          </StyledDiv>
+        </StyledDivBold>
+        <StyledDivBold>
           Allergenspuren:{" "}
-          <div>
+          <StyledDiv>
             {allergyList.map((ingredient) => ingredient.name).join(", ")}
-          </div>
-        </StyledDiv>
+          </StyledDiv>
+        </StyledDivBold>
       </Print>
-      <StyledButton type="button" onClick={cancel}>
-        Pralinenschachtel zurücksetzen
-      </StyledButton>
-      <StyledButton type="button" onClick={() => window.print()}>
-        Speichern / Drucken
-      </StyledButton>
-      <StyledButton
-        type="button"
-        onClick={() => {
-          router.push("/pralinen/edit");
-        }}
-      >
-        Pralinen anpassen
-      </StyledButton>
+      <br />
+      <GridContainer>
+        <StyledButton type="button" onClick={cancel}>
+          Pralinenschachtel zurücksetzen
+        </StyledButton>
+        <StyledButtonOrange type="button" onClick={() => window.print()}>
+          Speichern / Drucken
+        </StyledButtonOrange>
+        <br />
+        <StyledButtonBig
+          type="button"
+          onClick={() => {
+            router.push("/pralinen/edit");
+          }}
+        >
+          Pralinen anpassen
+        </StyledButtonBig>
+      </GridContainer>
     </>
   );
 }

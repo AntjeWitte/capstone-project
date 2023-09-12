@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { uid } from "uid";
 import useSWR from "swr";
-import { CldUploadButton } from "next-cloudinary";
+// import { CldUploadButton } from "next-cloudinary";
 
 import IngredientList from "./IngredientList";
 import InputField from "./InputField";
 import Modal from "../Modal/Modal";
 import PralineList from "../PralineList/PralineList";
-import { StyledButton, StyledLink } from "./PralineForm.styled";
+import {
+  Container,
+  GridContainer,
+  StyledButton,
+  StyledButtonOrange,
+  StyledLink,
+  StyledUploadButton,
+} from "./PralineForm.styled";
 import { StyledDiv, StyledH1 } from "../PralineBox/box.styled";
 
 export default function ProductForm() {
@@ -169,109 +176,121 @@ export default function ProductForm() {
           : "Pralinen erstellen"}
       </StyledH1>
       <br />
-      <StyledButton type="button" onClick={() => setIsModalVisible(true)}>
-        Praline bearbeiten
-      </StyledButton>
-      {isModalVisible && (
-        <Modal onClose={() => setIsModalVisible(false)} title="Pralinenauswahl">
-          <PralineList
-            onSelectPraline={(praline) => {
-              setPralineSelectedForEditing(praline);
-              setNameField(praline.name);
-              setVersionField(praline.version);
-              setWeightField(praline.weight);
-              setImageId(praline.imageId);
-              setIngredients(praline.ingredients);
-              setAllergyTraces(praline.allergyTraces);
-            }}
+      <GridContainer>
+        <StyledButton type="button" onClick={() => setIsModalVisible(true)}>
+          Praline bearbeiten
+        </StyledButton>
+        {isModalVisible && (
+          <Modal
+            onClose={() => setIsModalVisible(false)}
+            title="Pralinenauswahl"
           >
-            bearbeiten
-          </PralineList>
-        </Modal>
-      )}
-      <StyledButton
-        type="button"
-        disabled={!pralineSelectedForEditing}
-        onClick={handleDelete}
-      >
-        Praline löschen
-      </StyledButton>
+            <PralineList
+              onSelectPraline={(praline) => {
+                setPralineSelectedForEditing(praline);
+                setNameField(praline.name);
+                setVersionField(praline.version);
+                setWeightField(praline.weight);
+                setImageId(praline.imageId);
+                setIngredients(praline.ingredients);
+                setAllergyTraces(praline.allergyTraces);
+              }}
+            >
+              bearbeiten
+            </PralineList>
+          </Modal>
+        )}
+        <StyledButton
+          type="button"
+          disabled={!pralineSelectedForEditing}
+          onClick={handleDelete}
+        >
+          Praline löschen
+        </StyledButton>
+      </GridContainer>
       <br />
       <form onSubmit={pralineSelectedForEditing ? handleEdit : handleSubmit}>
-        <InputField
-          type="text"
-          id="name"
-          label="Name"
-          value={nameField}
-          onChange={(event) => {
-            setNameField(event.target.value);
-          }}
-        />
-        <br />
-        <InputField
-          type="number"
-          id="version"
-          label="Version"
-          value={versionField}
-          onChange={(event) => {
-            const { value } = event.target;
-
-            const fixedValue = Math.max(0, Math.min(25, value));
-
-            setVersionField(value > 0 ? fixedValue : " ");
-          }}
-        />
-        <br />
-        <InputField
-          id="weight"
-          label="Gewicht"
-          type="number"
-          step="0.1"
-          value={weightField}
-          onChange={(event) => {
-            const { value } = event.target;
-
-            const fixedValue = Math.max(5, Math.min(20, value));
-
-            setWeightField(value > 0 ? fixedValue : " ");
-          }}
-        />
-        <br />
-        <IngredientList
-          label="Zutaten"
-          id="ingredient"
-          placeholder="z.B. Kakaobutter"
-          onAddIngredient={handleAddIngredient}
-          ingredients={ingredients}
-          onDeleteIngredient={handleDeleteIngredient}
-        />
-        <br />
-        <IngredientList
-          label="Allergenspuren"
-          id="traces"
-          placeholder="z.B. Schalenfrüchte"
-          onAddIngredient={handleAddAllergyTraces}
-          ingredients={allergyTraces}
-          onDeleteIngredient={handleDeleteAllergyTrace}
-        />
-        <br />
-        <StyledDiv>
-          Bild hochladen:{" "}
-          <CldUploadButton
-            uploadPreset="lyzzky1u"
-            onUpload={({ info }) => setImageId(info.public_id)}
+        <Container>
+          <InputField
+            type="text"
+            id="name"
+            label="Name"
+            value={nameField}
+            onChange={(event) => {
+              setNameField(event.target.value);
+            }}
           />
-        </StyledDiv>
+          <br />
+          <InputField
+            type="number"
+            id="version"
+            label="Version"
+            value={versionField}
+            onChange={(event) => {
+              const { value } = event.target;
+
+              const fixedValue = Math.max(0, Math.min(25, value));
+
+              setVersionField(value > 0 ? fixedValue : " ");
+            }}
+          />
+          <br />
+          <InputField
+            id="weight"
+            label="Gewicht"
+            type="number"
+            step="0.1"
+            value={weightField}
+            onChange={(event) => {
+              const { value } = event.target;
+
+              const fixedValue = Math.max(1, Math.min(20, value));
+
+              setWeightField(value > 0 ? fixedValue : " ");
+            }}
+          />
+          <br />
+          <IngredientList
+            label="Zutaten"
+            id="ingredient"
+            placeholder="z.B. Kakaobutter"
+            onAddIngredient={handleAddIngredient}
+            ingredients={ingredients}
+            onDeleteIngredient={handleDeleteIngredient}
+          />
+          <br />
+          <IngredientList
+            label="Allergenspuren"
+            id="traces"
+            placeholder="z.B. Schalenfrüchte"
+            onAddIngredient={handleAddAllergyTraces}
+            ingredients={allergyTraces}
+            onDeleteIngredient={handleDeleteAllergyTrace}
+          />
+          <br />
+          <StyledDiv>
+            Bild hochladen:{" "}
+            <StyledUploadButton
+              uploadPreset="lyzzky1u"
+              onUpload={({ info }) => setImageId(info.public_id)}
+            >
+              Bild auswählen
+            </StyledUploadButton>
+          </StyledDiv>
+        </Container>
         <br />
-        <StyledButton type="button" onClick={cancel}>
-          Zurücksetzen
-        </StyledButton>
-        <StyledButton type="submit">
-          {" "}
-          {pralineSelectedForEditing ? "Speichern" : "Hinzufügen"}{" "}
-        </StyledButton>
+        <GridContainer>
+          <StyledButton type="button" onClick={cancel}>
+            Zurücksetzen
+          </StyledButton>
+          <StyledButtonOrange type="submit">
+            {" "}
+            {pralineSelectedForEditing ? "Speichern" : "Hinzufügen"}{" "}
+          </StyledButtonOrange>
+        </GridContainer>
         <br />
       </form>
+      <br />
       <StyledLink href="/">Zurück zur Pralinenschachtel</StyledLink>
     </>
   );

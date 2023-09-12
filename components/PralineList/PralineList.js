@@ -2,7 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import Image from "next/image";
 import { StyledPralineListItem } from "./PralineList.styled";
-import { StyledButton } from "../PralineForm/PralineForm.styled";
+import { StyledButtonOrange } from "../PralineForm/PralineForm.styled";
 
 export default function PralineList({ onSelectPraline, children }) {
   const { data, isLoading } = useSWR("/api/pralinen");
@@ -24,9 +24,12 @@ export default function PralineList({ onSelectPraline, children }) {
               alt={praline.name}
             />
           )}
-          <StyledButton type="button" onClick={() => onSelectPraline(praline)}>
+          <StyledButtonOrange
+            type="button"
+            onClick={() => onSelectPraline(praline)}
+          >
             {children}
-          </StyledButton>
+          </StyledButtonOrange>
         </StyledPralineListItem>
       ))}
     </ul>

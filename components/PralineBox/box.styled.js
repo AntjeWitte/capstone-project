@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Image from "next/image";
 
 export const StyledWrapper = styled.div`
   display: grid;
@@ -54,11 +53,18 @@ export const StyledH2 = styled.h2`
   font-size: var(--secondary-font-size);
 `;
 
-export const StyledDiv = styled.div`
+export const StyledDivBold = styled.div`
   color: var(--primary-font-color);
   font-family: var(--primary-font);
   font-size: var(--primary-font-size);
   font-weight: bold;
+`;
+
+export const StyledDiv = styled.div`
+  color: var(--primary-font-color);
+  font-family: var(--primary-font);
+  font-size: var(--primary-font-size);
+  font-weight: normal;
 `;
 
 export const StyledH1 = styled.h1`
