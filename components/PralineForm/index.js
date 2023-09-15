@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { uid } from "uid";
-import useSWR from "swr";
-// import { CldUploadButton } from "next-cloudinary";
 
 import IngredientList from "./IngredientList";
 import InputField from "./InputField";
 import Modal from "../Modal/Modal";
+import MessageModal from "../Modal/MessageModal";
 import PralineList from "../PralineList/PralineList";
 import {
   Container,
@@ -29,6 +28,7 @@ export default function PralineForm() {
   const [imageId, setImageId] = useState(null);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMessageModelVisible, setIsMessageModelVisible] = useState(false);
 
   function handleAddIngredient(newIngredient) {
     setIngredients([...ingredients, { ...newIngredient, id: uid() }]);
@@ -58,23 +58,15 @@ export default function PralineForm() {
     setNameField("");
     setVersionField("");
     setWeightField("");
+    setImageId(null);
   }
 
-  console.log("name", nameField);
-  console.log("version", versionField);
-  console.log("weight", weightField);
-  console.log("ingredients", ingredients);
-  console.log("allergy", allergyTraces);
-
-  // const { mutate } = useSWR("/api/pralinen");
-
-  // if (isLoading) {
-  //   return <h1>Loading...</h1>;
-  // }
-
-  // if (!data) {
-  //   return null;
-  // }
+  console.log("name:", nameField);
+  console.log("version:", versionField);
+  console.log("weight:", weightField);
+  console.log("ingredients:", ingredients);
+  console.log("allergy:", allergyTraces);
+  console.log("imageID:", imageId);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -103,17 +95,16 @@ export default function PralineForm() {
       body: JSON.stringify(newPraline),
     });
 
-    // if (response.ok) {
-    //   mutate();
-    // }
-
-    setIngredients([]);
-    setAllergyTraces([]);
-    setNameField("");
-    setVersionField("");
-    setWeightField("");
-    event.target.reset();
-    event.target.elements[0].focus();
+    if (response.ok) {
+      setIngredients([]);
+      setAllergyTraces([]);
+      setNameField("");
+      setVersionField("");
+      setWeightField("");
+      setImageId(null);
+      event.target.reset();
+      event.target.elements[0].focus();
+    }
   }
 
   async function handleEdit(event) {
@@ -148,13 +139,12 @@ export default function PralineForm() {
     );
 
     if (response.ok) {
-      // mutate();
-
       setIngredients([]);
       setAllergyTraces([]);
       setNameField("");
       setVersionField("");
       setWeightField("");
+      setImageId(null);
       setPralineSelectedForEditing(null);
     }
   }
@@ -166,13 +156,12 @@ export default function PralineForm() {
       method: "DELETE",
     });
 
-    // mutate();
-
     setIngredients([]);
     setAllergyTraces([]);
     setNameField("");
     setVersionField("");
     setWeightField("");
+    setImageId(null);
     setPralineSelectedForEditing(null);
   }
 
@@ -211,11 +200,20 @@ export default function PralineForm() {
         <StyledButton
           type="button"
           disabled={!pralineSelectedForEditing}
-          onClick={handleDelete}
+          onClick={() => setIsMessageModelVisible(true)}
         >
           Praline löschen
         </StyledButton>
       </GridContainer>
+      {isMessageModelVisible && (
+        <MessageModal
+          onClose={() => setIsMessageModelVisible(false)}
+          onSubmit={handleDelete}
+          text="Praline wirklich löschen?"
+          button1="abbrechen"
+          button2="löschen"
+        />
+      )}
       <br />
       <form onSubmit={pralineSelectedForEditing ? handleEdit : handleSubmit}>
         <Container>

@@ -35,7 +35,7 @@ export const StyledButtonOrange = styled.button`
   margin: 5px;
   border: 2px solid var(--tertiary-font-color);
   font-family: var(--primary-font);
-  min-width: 30px;
+  min-width: 100px;
   text-align: center;
   font-size: var(--primary-font-size);
   &:hover {

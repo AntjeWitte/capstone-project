@@ -19,10 +19,12 @@ import {
   StyledButtonBig,
   StyledButtonOrange,
 } from "../PralineForm/PralineForm.styled";
+import MessageModal from "../Modal/MessageModal";
 
 export default function MainPage() {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMessageModelVisible, setIsMessageModelVisible] = useState(false);
   const [slotId, setSlotId] = useState(null);
   const [boxsize, setBoxsize] = useState(9);
   const [pralineList, setPralineList] = useState([]);
@@ -170,6 +172,17 @@ export default function MainPage() {
         </StyledDivBold>
       </Print>
       <br />
+      {isMessageModelVisible && (
+        <MessageModal
+          onClose={() => setIsMessageModelVisible(false)}
+          onSubmit={() => {
+            router.push("/pralinen/edit");
+          }}
+          text="Achtung: beim Verlassen der Seite wird die Pralinenschachtel zurückgesetzt!"
+          button1="zurück"
+          button2="fortfahren"
+        />
+      )}
       <GridContainer>
         <StyledButton type="button" onClick={cancel}>
           Pralinenschachtel zurücksetzen
@@ -181,7 +194,7 @@ export default function MainPage() {
         <StyledButtonBig
           type="button"
           onClick={() => {
-            router.push("/pralinen/edit");
+            setIsMessageModelVisible(true);
           }}
         >
           Pralinen anpassen
