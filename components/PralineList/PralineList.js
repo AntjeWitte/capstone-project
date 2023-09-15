@@ -22,6 +22,7 @@ export default function PralineList({ onSelectPraline, children }) {
               src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${praline.imageId}.png`}
               sizes="50vw"
               alt={praline.name}
+              onClick={() => onSelectPraline(praline)}
             />
           )}
           <StyledButtonOrange

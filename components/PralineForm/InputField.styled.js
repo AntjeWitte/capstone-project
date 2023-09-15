@@ -18,7 +18,7 @@ export const StyledInputField = styled.input`
   font-family: var(--primary-font);
   font-size: var(--primary-font-size);
   margin-left: 5px;
-  padding: 8px 10px 8px 10px;
+  padding: 4px 10px 4px 10px;
   border-radius: 24px;
   flex-grow: 1;
   width: 70%;

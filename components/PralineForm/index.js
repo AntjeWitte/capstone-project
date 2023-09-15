@@ -17,7 +17,7 @@ import {
 } from "./PralineForm.styled";
 import { StyledDiv, StyledH1 } from "../PralineBox/box.styled";
 
-export default function ProductForm() {
+export default function PralineForm() {
   const [ingredients, setIngredients] = useState([]);
   const [allergyTraces, setAllergyTraces] = useState([]);
   // eslint-disable-next-line operator-linebreak
@@ -60,15 +60,21 @@ export default function ProductForm() {
     setWeightField("");
   }
 
-  const { data, isLoading, mutate } = useSWR("/api/pralinen");
+  console.log("name", nameField);
+  console.log("version", versionField);
+  console.log("weight", weightField);
+  console.log("ingredients", ingredients);
+  console.log("allergy", allergyTraces);
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
+  // const { mutate } = useSWR("/api/pralinen");
 
-  if (!data) {
-    return null;
-  }
+  // if (isLoading) {
+  //   return <h1>Loading...</h1>;
+  // }
+
+  // if (!data) {
+  //   return null;
+  // }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -97,9 +103,9 @@ export default function ProductForm() {
       body: JSON.stringify(newPraline),
     });
 
-    if (response.ok) {
-      mutate();
-    }
+    // if (response.ok) {
+    //   mutate();
+    // }
 
     setIngredients([]);
     setAllergyTraces([]);
@@ -142,7 +148,7 @@ export default function ProductForm() {
     );
 
     if (response.ok) {
-      mutate();
+      // mutate();
 
       setIngredients([]);
       setAllergyTraces([]);
@@ -153,12 +159,14 @@ export default function ProductForm() {
     }
   }
 
+  console.log("ingredients:", ingredients);
+
   async function handleDelete() {
     await fetch(`/api/pralinen/${pralineSelectedForEditing._id}`, {
       method: "DELETE",
     });
 
-    mutate();
+    // mutate();
 
     setIngredients([]);
     setAllergyTraces([]);
@@ -260,7 +268,7 @@ export default function ProductForm() {
           />
           <br />
           <IngredientList
-            label="Allergenspuren"
+            label="Spuren"
             id="traces"
             placeholder="z.B. Schalenfrüchte"
             onAddIngredient={handleAddAllergyTraces}
@@ -280,7 +288,11 @@ export default function ProductForm() {
         </Container>
         <br />
         <GridContainer>
-          <StyledButton type="button" onClick={cancel}>
+          <StyledButton
+            type="button"
+            data-testid="zurücksetzen"
+            onClick={cancel}
+          >
             Zurücksetzen
           </StyledButton>
           <StyledButtonOrange type="submit">

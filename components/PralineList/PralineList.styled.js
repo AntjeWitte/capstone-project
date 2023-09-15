@@ -20,8 +20,8 @@ export const StyledPralineListItem = styled.li`
   font-family: var(--primary-font);
   padding: 5px;
   list-style-type: none;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 30px;
+  margin-right: 70px;
   margin-top: 10px;
   min-width: 25px;
   text-align: center;

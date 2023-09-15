@@ -20,6 +20,7 @@ export default function InputField({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        data-testid={id}
         required
       />
     </StyledInputLabel>

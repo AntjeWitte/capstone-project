@@ -90,9 +90,35 @@ export const StyledUploadButton = styled(CldUploadButton)`
   }
 `;
 
+export const StyledButtonGrid = styled.button`
+  background-color: var(--primary-font-color);
+  color: var(--secondary-background);
+  padding: 4px 10px 4px 10px;
+  border-radius: 24px;
+  margin: 5px;
+  border: 2px solid var(--tertiary-font-color);
+  font-family: var(--primary-font);
+  width: 45px;
+  grid-column: 3;
+  grid-row: 2;
+  text-align: center;
+  font-size: var(--primary-font-size);
+  &:hover {
+    background-color: var(--secondary-font-color);
+    border: 1px solid var(--tertiary-font-color);
+    cursor: pointer;
+  }
+`;
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+`;
+
+export const GridContainerRows = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 `;
 
 export const Container = styled.div`
@@ -100,8 +126,4 @@ export const Container = styled.div`
   padding: 5px;
   border-radius: 16px;
   background: rgba(190, 194, 203, 0.4);
-
-  /* background-image: var(--grey-background);
-  height: "80vh";
-  background-size: cover; */
 `;

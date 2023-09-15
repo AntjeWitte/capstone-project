@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { StyledInputLabel } from "./InputField.styled";
-import { StyledButton } from "./PralineForm.styled";
+import { StyledButton, StyledButtonGrid } from "./PralineForm.styled";
 import {
   StyledInputFieldIngredient,
   StyledInputFieldWeight,
+  StyledInputLabelWrap,
   StyledList,
 } from "./IngredientList.styled";
 
@@ -29,12 +29,13 @@ export default function IngredientList({
 
   return (
     <>
-      <StyledInputLabel htmlFor={id}>
+      <StyledInputLabelWrap htmlFor={id}>
         {`${label}: `}
         <StyledInputFieldIngredient
           type="text"
           id={id}
           name={id}
+          data-testid={id}
           value={value}
           placeholder={placeholder}
           onChange={(event) => {
@@ -45,17 +46,21 @@ export default function IngredientList({
           type="text"
           id={`${id}-amount`}
           name={`${id}-amount`}
-          placeholder="Gewicht in g"
+          data-testid={`${id}-amount`}
+          placeholder="g"
           value={amount}
           onChange={(event) => {
             setAmount(event.target.value);
           }}
-        />{" "}
-        g{" "}
-        <StyledButton type="button" onClick={handleAddIngredient}>
+        />
+        <StyledButtonGrid
+          type="button"
+          data-testid={`${id}-button`}
+          onClick={handleAddIngredient}
+        >
           +
-        </StyledButton>
-      </StyledInputLabel>
+        </StyledButtonGrid>
+      </StyledInputLabelWrap>
       <ul>
         {ingredients.map((ingredient) => (
           <StyledList key={ingredient.id}>
