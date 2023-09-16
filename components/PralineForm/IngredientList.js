@@ -43,14 +43,18 @@ export default function IngredientList({
           }}
         />{" "}
         <StyledInputFieldWeight
-          type="text"
+          type="number"
           id={`${id}-amount`}
           name={`${id}-amount`}
           data-testid={`${id}-amount`}
           placeholder="g"
           value={amount}
           onChange={(event) => {
-            setAmount(event.target.value);
+            const ingredientAmount = event.target.value;
+
+            const fixedValue = Math.max(0, Math.min(100, ingredientAmount));
+
+            setAmount(fixedValue);
           }}
         />
         <StyledButtonGrid

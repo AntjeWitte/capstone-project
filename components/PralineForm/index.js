@@ -78,11 +78,13 @@ export default function PralineForm() {
     const formData = new FormData(event.target);
     const pralineData = Object.fromEntries(formData);
 
+    const image = imageId || "Pralines/odujukkhc15tdrnoyyj6";
+
     const newPraline = {
       name: pralineData.name,
       version: pralineData.version,
       weight: pralineData.weight,
-      imageId: imageId,
+      imageId: image,
       ingredients: ingredients,
       allergyTraces: allergyTraces,
     };
