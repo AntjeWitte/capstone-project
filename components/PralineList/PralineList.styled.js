@@ -1,18 +1,5 @@
 import styled from "styled-components";
 
-// export const StyledPralineList = styled.div`
-//   //background-image: var(--secondary-background-image);
-//   background-color: var(--primary-font);
-//   height: "100vh";
-//   background-size: "cover";
-//   border: 2px solid black;
-//   color: var(--tertiary-font-color);
-//   font-family: var(--primary-font);
-//   text-align: center;
-//   border-radius: 4px;
-//   list-style: none;
-// `;
-
 export const StyledPralineListItem = styled.li`
   background-color: var(--primary-background);
   border: 2px solid black;

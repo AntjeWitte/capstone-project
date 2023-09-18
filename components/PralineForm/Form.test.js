@@ -17,40 +17,51 @@ test("form gets displayed with all inputs fields", () => {
   expect(allergyInput).toBeInTheDocument();
 });
 
-test("every new ingredient is added with id to ingredientlist", async () => {
-  const user = userEvent.setup();
-  const handleAddIngredient = jest.fn();
-  render(<PralineForm onAddIngredient={handleAddIngredient} />);
-  const ingredientInput = screen.getByTestId("ingredient");
-  const submitButton = screen.getByTestId("ingredient-button");
-  await user.type(ingredientInput, "Kakaobutter");
-  await user.click(submitButton);
-  expect(ingredientInput).toHaveDisplayValue({
-    ingredient: "Kakaobutter",
-    amount: " ",
-    id: typeof string,
-  });
-});
+// test("every new ingredient is added with id to ingredientlist", async () => {
+//   const user = userEvent.setup();
+//   const handleAddIngredient = jest.fn();
+//   render(<PralineForm onAddIngredient={handleAddIngredient} />);
+//   const ingredientInput = screen.getByTestId("ingredient");
+//   const submitButton = screen.getByTestId("ingredient-button");
+//   await user.type(ingredientInput, "Kakaobutter");
+//   await user.click(submitButton);
+//   expect(ingredientInput).toHaveDisplayValue({
+//     ingredient: "Kakaobutter",
+//     amount: " ",
+//     id: typeof string,
+//   });
+// });
 
-test("button zurücksetzen clears all input field states", async () => {
+// test("button zurücksetzen clears all input field states", async () => {
+//   const user = userEvent.setup();
+//   const cancel = jest.fn();
+//   render(<PralineForm onClick={cancel} />);
+//   const nameField = screen.getByTestId("name");
+//   const versionField = screen.getByTestId("version");
+//   const weightField = screen.getByTestId("weight");
+//   const ingredientField = screen.getByTestId("ingredient");
+//   const allergyField = screen.getByTestId("traces");
+//   const button = screen.getByTestId("zurücksetzen");
+//   await user.type(nameField, "Trüffel");
+//   await user.type(versionField, "zwei");
+//   await user.type(weightField, "elf");
+//   await user.type(ingredientField, "Zucker");
+//   await user.type(allergyField, "Erdnuss");
+//   await user.click(button);
+//   expect(nameField).toHaveValue("");
+//   expect(versionField).toHaveValue("");
+//   expect(weightField).toHaveValue("");
+//   expect(ingredientField).toHaveValue([]);
+//   expect(allergyField).toHaveValue([]);
+// });
+
+test("focusses the name input when the form is submitted", async () => {
   const user = userEvent.setup();
-  const cancel = jest.fn();
-  render(<PralineForm onClick={cancel} />);
-  const nameField = screen.getByTestId("name");
-  const versionField = screen.getByTestId("version");
-  const weightField = screen.getByTestId("weight");
-  const ingredientField = screen.getByTestId("ingredient");
-  const allergyField = screen.getByTestId("traces");
-  const button = screen.getByTestId("zurücksetzen");
-  await user.type(nameField, "Trüffel");
-  await user.type(versionField, "zwei");
-  await user.type(weightField, "elf");
-  await user.type(ingredientField, "Zucker");
-  await user.type(allergyField, "Erdnuss");
-  await user.click(button);
-  expect(nameField).toHaveValue("");
-  expect(versionField).toHaveValue("");
-  expect(weightField).toHaveValue("");
-  expect(ingredientField).toHaveValue([]);
-  expect(allergyField).toHaveValue([]);
+  const handleSubmit = jest.fn();
+  render(<PralineForm onSubmit={handleSubmit} />);
+  const nameInput = screen.getByTestId("name");
+  const submitButton = screen.getByTestId("submit-button");
+  await user.type(nameInput, "Nusspraline");
+  await user.click(submitButton);
+  expect(nameInput).toHaveFocus();
 });

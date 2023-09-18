@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { CldUploadButton } from "next-cloudinary";
-import logo from "../../utils/logo_heart.png";
 
 export const StyledForm = styled.form`
   display: flex;
@@ -130,8 +129,25 @@ export const Container = styled.div`
 `;
 
 export const StyledLogo = styled.div`
-  border-radius: 200px;
-  //background-color: var(--primary-font-color);
-  background-image: url("logo_heart.png");
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid var(--tertiary-font-color);
+  background-image: url("logo_heart.png"), var(--gold-folie);
   background-position: center;
+  background-size: 150%;
+  grid-column: 1;
+`;
+
+export const StyledH1 = styled.h1`
+  text-align: center;
+  color: gold;
+  font-family: var(--primary-font);
+  font-size: 22px;
+  display: grid;
+  grid-template-columns: 27% 73%;
+`;
+
+export const P = styled.p`
+  grid-column: 2;
 `;

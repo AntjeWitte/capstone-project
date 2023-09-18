@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { uid } from "uid";
 
 import IngredientList from "./IngredientList";
@@ -12,9 +13,12 @@ import {
   StyledButton,
   StyledButtonOrange,
   StyledLink,
+  StyledLogo,
   StyledUploadButton,
+  StyledH1,
+  P,
 } from "./PralineForm.styled";
-import { StyledDiv, StyledH1 } from "../PralineBox/box.styled";
+import { StyledDiv } from "../PralineBox/box.styled";
 
 export default function PralineForm() {
   const [ingredients, setIngredients] = useState([]);
@@ -26,7 +30,7 @@ export default function PralineForm() {
   const [versionField, setVersionField] = useState("");
   const [weightField, setWeightField] = useState("");
   const [imageId, setImageId] = useState(null);
-
+  const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isMessageModalVisible, setIsMessageModalVisible] = useState(false);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
@@ -171,11 +175,17 @@ export default function PralineForm() {
   return (
     <>
       <StyledH1>
-        {pralineSelectedForEditing
-          ? "Praline bearbeiten"
-          : "Pralinen erstellen"}
+        <StyledLogo
+          onClick={() => {
+            router.push("/");
+          }}
+        />
+        <P>
+          {pralineSelectedForEditing
+            ? "Praline bearbeiten"
+            : "Pralinen erstellen"}
+        </P>
       </StyledH1>
-      <br />
       <GridContainer>
         <StyledButton type="button" onClick={() => setIsModalVisible(true)}>
           Praline bearbeiten
@@ -312,7 +322,7 @@ export default function PralineForm() {
           >
             Zurücksetzen
           </StyledButton>
-          <StyledButtonOrange type="submit">
+          <StyledButtonOrange type="submit" data-testid="submit-button">
             {" "}
             {pralineSelectedForEditing ? "Speichern" : "Hinzufügen"}{" "}
           </StyledButtonOrange>

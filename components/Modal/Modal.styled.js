@@ -12,11 +12,8 @@ export const StyledBackground = styled.div`
 `;
 
 export const StyledModal = styled.div`
-  //background-image: var(--secondary-background-image);
-  background-color: var(--primary-font-color);
-  /* height: "100vh";
-  background-size: "cover"; */
-  /* background: white; */
+  background-image: var(--gold-folie);
+  background-size: contain;
   border: 2px solid black;
   color: var(--tertiary-font-color);
   font-family: var(--primary-font);

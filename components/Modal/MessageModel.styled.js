@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const StyledMessageModal = styled.div`
   //background-image: var(--secondary-background-image);
   background-color: var(--primary-font-color);
+  background-color: white;
   /* height: "100vh";
   background-size: "cover"; */
   /* background: white; */
-  border: 2px solid black;
+  border: 4px solid var(--tertiary-font-color);
   color: var(--tertiary-font-color);
   font-family: var(--primary-font);
   font-size: var(--secondary-font-size);

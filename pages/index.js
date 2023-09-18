@@ -1,9 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { Inter } from "next/font/google";
-import Image from "next/image";
 import MainPage from "@/components/PralineBox";
-import logo from "../utils/logo_heart.png";
 import { StyledLogo } from "@/components/PralineForm/PralineForm.styled";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,9 +17,7 @@ export default function Home() {
       </Head>
       <main className={inter.className}>
         <Heading>
-          {/* <StyledLogo>
-            <Image src="/logo_heart.png" width="40" height="40" alt="logo" />
-          </StyledLogo> */}
+          <StyledLogo />
           Pralinenschachtel Konfigurator
         </Heading>
         <MainPage />
@@ -32,7 +28,9 @@ export default function Home() {
 
 const Heading = styled.h1`
   text-align: center;
-  color: var(--primary-font-color);
+  display: grid;
+  grid-template-columns: 25% 75%;
+  color: gold;
   font-family: var(--primary-font);
-  font-size: 25px;
+  font-size: 22px;
 `;
