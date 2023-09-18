@@ -27,6 +27,6 @@ export default createGlobalStyle`
   body {
     margin: 0;
     font-family: system-ui;
-    padding: 2rem;
+    padding: 20px 25px 8px 25px;
   }
 `;

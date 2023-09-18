@@ -22,6 +22,7 @@ export const StyledButton = styled.button`
   &:hover {
     background-color: var(--secondary-font-color);
     border: 1px solid var(--tertiary-font-color);
+    color: gold;
     cursor: pointer;
   }
 `;
@@ -29,7 +30,8 @@ export const StyledButton = styled.button`
 export const StyledButtonOrange = styled.button`
   margin: 5px;
   background-color: var(--secondary-font-color);
-  color: var(--secondary-background);
+  //color: var(--secondary-background);
+  color: gold;
   padding: 8px 10px 8px 10px;
   border-radius: 24px;
   margin: 5px;
@@ -61,6 +63,7 @@ export const StyledButtonBig = styled.button`
   &:hover {
     background-color: var(--secondary-font-color);
     border: 1px solid var(--tertiary-font-color);
+    color: gold;
     cursor: pointer;
   }
 `;
@@ -86,6 +89,7 @@ export const StyledUploadButton = styled(CldUploadButton)`
   &:hover {
     background-color: var(--secondary-font-color);
     border: 1px solid var(--tertiary-font-color);
+    color: gold;
     cursor: pointer;
   }
 `;

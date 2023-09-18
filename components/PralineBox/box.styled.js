@@ -68,10 +68,3 @@ export const StyledDiv = styled.div`
   font-size: var(--primary-font-size);
   font-weight: normal;
 `;
-
-export const StyledH1 = styled.h1`
-  text-align: center;
-  color: var(--primary-font-color);
-  font-family: var(--primary-font);
-  font-size: 25px;
-`;
