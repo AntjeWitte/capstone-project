@@ -15,15 +15,17 @@ export default function MessageModal({
       <StyledButtonOrange type="button" onClick={onClose}>
         {button1}
       </StyledButtonOrange>
-      <StyledButtonOrange
-        type="button"
-        onClick={(event) => {
-          onSubmit(event);
-          onClose(event);
-        }}
-      >
-        {button2}
-      </StyledButtonOrange>
+      {button2 && (
+        <StyledButtonOrange
+          type="button"
+          onClick={(event) => {
+            onSubmit(event);
+            onClose(event);
+          }}
+        >
+          {button2}
+        </StyledButtonOrange>
+      )}
     </StyledMessageModal>
   );
 }

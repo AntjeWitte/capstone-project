@@ -28,7 +28,8 @@ export default function PralineForm() {
   const [imageId, setImageId] = useState(null);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isMessageModelVisible, setIsMessageModelVisible] = useState(false);
+  const [isMessageModalVisible, setIsMessageModalVisible] = useState(false);
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
 
   function handleAddIngredient(newIngredient) {
     setIngredients([...ingredients, { ...newIngredient, id: uid() }]);
@@ -202,22 +203,38 @@ export default function PralineForm() {
         <StyledButton
           type="button"
           disabled={!pralineSelectedForEditing}
-          onClick={() => setIsMessageModelVisible(true)}
+          onClick={() => setIsMessageModalVisible(true)}
         >
           Praline löschen
         </StyledButton>
       </GridContainer>
-      {isMessageModelVisible && (
+      {isMessageModalVisible && (
         <MessageModal
-          onClose={() => setIsMessageModelVisible(false)}
+          onClose={() => setIsMessageModalVisible(false)}
           onSubmit={handleDelete}
           text="Praline wirklich löschen?"
           button1="abbrechen"
           button2="löschen"
         />
       )}
+      {isSuccessModalVisible && (
+        <MessageModal
+          onClose={() => setIsSuccessModalVisible(false)}
+          text="Praline gespeichert!"
+          button1="ok"
+        />
+      )}
       <br />
-      <form onSubmit={pralineSelectedForEditing ? handleEdit : handleSubmit}>
+      <form
+        onSubmit={(event) => {
+          if (pralineSelectedForEditing) {
+            handleEdit(event);
+          } else {
+            handleSubmit(event);
+          }
+          setIsSuccessModalVisible(true);
+        }}
+      >
         <Container>
           <InputField
             type="text"

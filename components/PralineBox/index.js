@@ -100,10 +100,10 @@ export default function MainPage() {
           {/* {pralineList[i]?.name} */}
           {pralineList[i]?.imageId && (
             <StyledImage
-              width="100"
-              height="100"
+              width="40"
+              height="40"
               src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${pralineList[i].imageId}.png`}
-              sizes="50vw"
+              sizes="20vw"
               alt={pralineList[i]?.name}
             />
           )}
