@@ -41,7 +41,7 @@ export default function IngredientList({
           onChange={(event) => {
             setValue(event.target.value);
           }}
-        />{" "}
+        />
         <StyledInputFieldWeight
           type="number"
           id={`${id}-amount`}
@@ -68,7 +68,7 @@ export default function IngredientList({
       <ul>
         {ingredients.map((ingredient) => (
           <StyledList key={ingredient.id}>
-            {ingredient.ingredient} {ingredient.amount} g{" "}
+            {`${ingredient.ingredient} ${ingredient.amount} g`}
             <StyledButton
               type="button"
               onClick={() => onDeleteIngredient(ingredient.id)}

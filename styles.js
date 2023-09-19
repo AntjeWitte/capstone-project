@@ -7,6 +7,14 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
+
+  @media print {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }} 
+  
   :root {
 --primary-font-color: #bec2cb; //hellgrau
 --secondary-font-color: #b8733a; //orange
@@ -28,5 +36,6 @@ export default createGlobalStyle`
     margin: 0;
     font-family: system-ui;
     padding: 20px 25px 8px 25px;
+
   }
 `;

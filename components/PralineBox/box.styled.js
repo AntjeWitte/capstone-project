@@ -44,7 +44,6 @@ export const Print = styled.div`
     padding: 24px;
     background-color: white;
     -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
 `;
 

@@ -141,6 +141,9 @@ export const StyledLogo = styled.div`
   background-position: center;
   background-size: 150%;
   grid-column: 1;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const StyledH1 = styled.h1`

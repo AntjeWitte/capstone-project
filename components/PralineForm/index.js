@@ -66,13 +66,6 @@ export default function PralineForm() {
     setImageId(null);
   }
 
-  console.log("name:", nameField);
-  console.log("version:", versionField);
-  console.log("weight:", weightField);
-  console.log("ingredients:", ingredients);
-  console.log("allergy:", allergyTraces);
-  console.log("imageID:", imageId);
-
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -155,8 +148,6 @@ export default function PralineForm() {
       setPralineSelectedForEditing(null);
     }
   }
-
-  console.log("ingredients:", ingredients);
 
   async function handleDelete() {
     await fetch(`/api/pralinen/${pralineSelectedForEditing._id}`, {
@@ -308,6 +299,7 @@ export default function PralineForm() {
             <StyledUploadButton
               uploadPreset="lyzzky1u"
               onUpload={({ info }) => setImageId(info.public_id)}
+              id="uploadButton"
             >
               Bild auswählen
             </StyledUploadButton>

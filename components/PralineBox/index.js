@@ -100,10 +100,10 @@ export default function MainPage() {
           {/* {pralineList[i]?.name} */}
           {pralineList[i]?.imageId && (
             <StyledImage
-              width="40"
-              height="40"
+              width="100"
+              height="100"
               src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${pralineList[i].imageId}.png`}
-              sizes="20vw"
+              sizes="50vw"
               alt={pralineList[i]?.name}
             />
           )}
@@ -118,6 +118,7 @@ export default function MainPage() {
       <InputField
         type="number"
         id="boxsize"
+        data-testid="boxsize"
         label="Gewünschte Pralinenanzahl"
         value={boxsize}
         onChange={(event) => {
@@ -156,7 +157,6 @@ export default function MainPage() {
             </PralineList>
           </Modal>
         )}
-
         <StyledDivBold>Gewicht: {weightSum} g</StyledDivBold>
         <StyledDivBold>
           Zutaten:{" "}
