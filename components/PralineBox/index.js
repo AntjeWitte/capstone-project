@@ -85,8 +85,6 @@ export default function MainPage() {
     0
   );
 
-  console.log("slotId", slotId);
-
   const getBoxes = () => {
     const boxes = [];
 

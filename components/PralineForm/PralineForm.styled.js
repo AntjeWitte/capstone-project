@@ -137,7 +137,7 @@ export const StyledLogo = styled.div`
   height: 70px;
   border-radius: 50%;
   border: 3px solid var(--tertiary-font-color);
-  background-image: url("logo_heart.png"), var(--gold-folie);
+  background-image: url("/../logo_heart.png"), var(--gold-folie);
   background-position: center;
   background-size: 150%;
   grid-column: 1;
