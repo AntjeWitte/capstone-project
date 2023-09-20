@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { uid } from "uid";
-
 import IngredientList from "./IngredientList";
 import InputField from "./InputField";
 import Modal from "../Modal/Modal";
@@ -244,6 +243,9 @@ export default function PralineForm() {
             value={nameField}
             onChange={(event) => {
               setNameField(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") event.preventDefault();
             }}
           />
           <br />

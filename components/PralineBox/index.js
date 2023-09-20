@@ -33,6 +33,7 @@ export default function MainPage() {
   function cancel() {
     setPralineList([]);
     setPralineBoxName("");
+    setSlotId(null);
   }
 
   const ingredientSum = pralineList
@@ -83,6 +84,8 @@ export default function MainPage() {
     (sum, current) => sum + parseFloat(current.weight, 10),
     0
   );
+
+  console.log("slotId", slotId);
 
   const getBoxes = () => {
     const boxes = [];
@@ -194,7 +197,11 @@ export default function MainPage() {
         <StyledButtonBig
           type="button"
           onClick={() => {
-            setIsMessageModelVisible(true);
+            if (slotId != null) {
+              setIsMessageModelVisible(true);
+            } else {
+              router.push("/pralinen/edit");
+            }
           }}
         >
           Pralinen anpassen
