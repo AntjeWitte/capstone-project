@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import { StyledButton, StyledButtonGrid } from "./PralineForm.styled";
+import {
+  StyledInputFieldIngredient,
+  StyledInputFieldWeight,
+  StyledInputLabelWrap,
+  StyledList,
+} from "./IngredientList.styled";
 
 export default function IngredientList({
   label,
@@ -22,44 +29,53 @@ export default function IngredientList({
 
   return (
     <>
-      <label htmlFor={id}>
+      <StyledInputLabelWrap htmlFor={id}>
         {`${label}: `}
-        <input
+        <StyledInputFieldIngredient
           type="text"
           id={id}
           name={id}
+          data-testid={id}
           value={value}
           placeholder={placeholder}
           onChange={(event) => {
             setValue(event.target.value);
           }}
-        />{" "}
-        <input
-          type="text"
+        />
+        <StyledInputFieldWeight
+          type="number"
           id={`${id}-amount`}
           name={`${id}-amount`}
-          placeholder="Gewicht in g"
+          data-testid={`${id}-amount`}
+          placeholder="g"
           value={amount}
           onChange={(event) => {
-            setAmount(event.target.value);
+            const ingredientAmount = event.target.value;
+
+            const fixedValue = Math.max(0, Math.min(100, ingredientAmount));
+
+            setAmount(fixedValue);
           }}
-        />{" "}
-        g{" "}
-        <button type="button" onClick={handleAddIngredient}>
+        />
+        <StyledButtonGrid
+          type="button"
+          data-testid={`${id}-button`}
+          onClick={handleAddIngredient}
+        >
           +
-        </button>
-      </label>
+        </StyledButtonGrid>
+      </StyledInputLabelWrap>
       <ul>
         {ingredients.map((ingredient) => (
-          <li key={ingredient.id}>
-            {ingredient.ingredient} {ingredient.amount} g{" "}
-            <button
+          <StyledList key={ingredient.id}>
+            {`${ingredient.ingredient} ${ingredient.amount} g`}
+            <StyledButton
               type="button"
               onClick={() => onDeleteIngredient(ingredient.id)}
             >
               -
-            </button>
-          </li>
+            </StyledButton>
+          </StyledList>
         ))}
       </ul>
     </>

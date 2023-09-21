@@ -2,6 +2,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { Inter } from "next/font/google";
 import MainPage from "@/components/PralineBox";
+import { StyledLogo } from "@/components/PralineForm/PralineForm.styled";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={inter.className}>
-        <Heading>Pralinenschachtel Konfigurator 🍱</Heading>
+        <Heading>
+          <StyledLogo />
+          Pralinenschachtel Konfigurator
+        </Heading>
         <MainPage />
       </main>
     </>
@@ -24,4 +28,9 @@ export default function Home() {
 
 const Heading = styled.h1`
   text-align: center;
+  display: grid;
+  grid-template-columns: 25% 75%;
+  color: gold;
+  font-family: var(--primary-font);
+  font-size: 22px;
 `;

@@ -1,14 +1,30 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import Image from "next/image";
+
 import InputField from "../PralineForm/InputField";
-import { Print, StyledBox, StyledWrapper } from "./box.styled";
+import {
+  Print,
+  StyledBox,
+  StyledDiv,
+  StyledDivBold,
+  StyledH2,
+  StyledImage,
+  StyledWrapper,
+} from "./box.styled";
 import Modal from "../Modal/Modal";
 import PralineList from "../PralineList/PralineList";
+import {
+  GridContainer,
+  StyledButton,
+  StyledButtonBig,
+  StyledButtonOrange,
+} from "../PralineForm/PralineForm.styled";
+import MessageModal from "../Modal/MessageModal";
 
 export default function MainPage() {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMessageModelVisible, setIsMessageModelVisible] = useState(false);
   const [slotId, setSlotId] = useState(null);
   const [boxsize, setBoxsize] = useState(9);
   const [pralineList, setPralineList] = useState([]);
@@ -17,6 +33,7 @@ export default function MainPage() {
   function cancel() {
     setPralineList([]);
     setPralineBoxName("");
+    setSlotId(null);
   }
 
   const ingredientSum = pralineList
@@ -81,9 +98,9 @@ export default function MainPage() {
             setSlotId(key);
           }}
         >
-          {pralineList[i]?.name}
+          {/* {pralineList[i]?.name} */}
           {pralineList[i]?.imageId && (
-            <Image
+            <StyledImage
               width="100"
               height="100"
               src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${pralineList[i].imageId}.png`}
@@ -102,12 +119,13 @@ export default function MainPage() {
       <InputField
         type="number"
         id="boxsize"
+        data-testid="boxsize"
         label="Gewünschte Pralinenanzahl"
         value={boxsize}
         onChange={(event) => {
           const { value } = event.target;
 
-          const fixedValue = Math.max(3, Math.min(24, value));
+          const fixedValue = Math.max(1, Math.min(24, value));
 
           setBoxsize(value > 0 ? fixedValue : " ");
         }}
@@ -123,7 +141,7 @@ export default function MainPage() {
         }}
       />
       <Print>
-        <h2>{pralineBoxName}</h2>
+        <StyledH2>{pralineBoxName}</StyledH2>
         <StyledWrapper>{getBoxes()}</StyledWrapper>
 
         {isModalVisible && (
@@ -140,34 +158,53 @@ export default function MainPage() {
             </PralineList>
           </Modal>
         )}
-        <div>Gewicht: {weightSum} g</div>
-        <div>
+        <StyledDivBold>Gewicht: {weightSum} g</StyledDivBold>
+        <StyledDivBold>
           Zutaten:{" "}
-          <div>
+          <StyledDiv>
             {ingredientList.map((ingredient) => ingredient.name).join(", ")}
-          </div>
-        </div>
-        <div>
+          </StyledDiv>
+        </StyledDivBold>
+        <StyledDivBold>
           Allergenspuren:{" "}
-          <div>
+          <StyledDiv>
             {allergyList.map((ingredient) => ingredient.name).join(", ")}
-          </div>
-        </div>
+          </StyledDiv>
+        </StyledDivBold>
       </Print>
-      <button type="button" onClick={cancel}>
-        Pralinenschachtel zurücksetzen
-      </button>
-      <button type="button" onClick={() => window.print()}>
-        Speichern / Drucken
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          router.push("/pralinen/edit");
-        }}
-      >
-        Pralinen anpassen
-      </button>
+      <br />
+      {isMessageModelVisible && (
+        <MessageModal
+          onClose={() => setIsMessageModelVisible(false)}
+          onSubmit={() => {
+            router.push("/pralinen/edit");
+          }}
+          text="Achtung: beim Verlassen der Seite wird die Pralinenschachtel zurückgesetzt!"
+          button1="zurück"
+          button2="fortfahren"
+        />
+      )}
+      <GridContainer>
+        <StyledButton type="button" onClick={cancel}>
+          Pralinenschachtel zurücksetzen
+        </StyledButton>
+        <StyledButtonOrange type="button" onClick={() => window.print()}>
+          Speichern / Drucken
+        </StyledButtonOrange>
+        <br />
+        <StyledButtonBig
+          type="button"
+          onClick={() => {
+            if (slotId != null) {
+              setIsMessageModelVisible(true);
+            } else {
+              router.push("/pralinen/edit");
+            }
+          }}
+        >
+          Pralinen anpassen
+        </StyledButtonBig>
+      </GridContainer>
     </>
   );
 }

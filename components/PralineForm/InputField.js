@@ -1,3 +1,5 @@
+import { StyledInputField, StyledInputLabel } from "./InputField.styled";
+
 export default function InputField({
   type,
   id,
@@ -8,9 +10,9 @@ export default function InputField({
   step,
 }) {
   return (
-    <label htmlFor={id}>
+    <StyledInputLabel htmlFor={id}>
       {`${label}: `}
-      <input
+      <StyledInputField
         type={type}
         id={id}
         name={id}
@@ -18,8 +20,9 @@ export default function InputField({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        data-testid={id}
         required
       />
-    </label>
+    </StyledInputLabel>
   );
 }

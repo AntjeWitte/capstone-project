@@ -7,16 +7,24 @@ export const StyledBackground = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
+  display: grid;
+  grid-template-columns: 1fr;
 `;
 
 export const StyledModal = styled.div`
-  background: white;
+  background-image: var(--gold-folie);
+  background-size: contain;
+  border: 2px solid black;
+  color: var(--tertiary-font-color);
+  font-family: var(--primary-font);
+  text-align: center;
   position: fixed;
-  top: 110px;
+  top: 24px;
   left: 8px;
   right: 8px;
   bottom: 8px;
   border-radius: 16px;
+
   overflow: auto;
   @media print {
     display: none;

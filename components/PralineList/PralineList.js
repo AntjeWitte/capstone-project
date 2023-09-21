@@ -1,6 +1,8 @@
 import React from "react";
 import useSWR from "swr";
 import Image from "next/image";
+import { StyledPralineListItem } from "./PralineList.styled";
+import { StyledButtonOrange } from "../PralineForm/PralineForm.styled";
 
 export default function PralineList({ onSelectPraline, children }) {
   const { data, isLoading } = useSWR("/api/pralinen");
@@ -10,7 +12,7 @@ export default function PralineList({ onSelectPraline, children }) {
   return (
     <ul>
       {data.map((praline) => (
-        <li key={praline._id}>
+        <StyledPralineListItem key={praline._id}>
           <p>{praline.name}</p>
 
           {praline.imageId && (
@@ -20,12 +22,16 @@ export default function PralineList({ onSelectPraline, children }) {
               src={`https://res.cloudinary.com/dtz3vpjks/image/upload/v1691655286/${praline.imageId}.png`}
               sizes="50vw"
               alt={praline.name}
+              onClick={() => onSelectPraline(praline)}
             />
           )}
-          <button type="button" onClick={() => onSelectPraline(praline)}>
+          <StyledButtonOrange
+            type="button"
+            onClick={() => onSelectPraline(praline)}
+          >
             {children}
-          </button>
-        </li>
+          </StyledButtonOrange>
+        </StyledPralineListItem>
       ))}
     </ul>
   );
